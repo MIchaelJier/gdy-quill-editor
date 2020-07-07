@@ -1,32 +1,24 @@
 <template>
   <div class="hello">
-    <v-editor></v-editor>
+    <gdy-editor class="editor" v-model="messages"></gdy-editor>
   </div>
 </template>
 
 <script>
 export default {
   name: 'HelloWorld',
-  props: {
-    msg: String,
+  data() {
+    return {
+      messages: '',
+    }
   },
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.editor {
+  width: 100%;
+  height: px2rem(200);
 }
 </style>
