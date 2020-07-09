@@ -1,18 +1,35 @@
 <template>
   <div class="quill-editor">
-    <!-- <slot name="toolbar"></slot> -->
-    <div id="toolbar">
-      <div class="ql-bold"></div>
-    </div>
+    <slot name="toolbar"></slot>
+    <!-- slot example -->
+    <!-- <div id="toolbar">
+      <select class="ql-size">
+        <option value="small">small</option>
+        <option value="large">large</option>
+        <option value="huge">huge</option>
+      </select>
+      <button class="ql-bold">bold</button>
+      <button class="ql-script" value="sub">sub</button>
+      <button class="ql-script" value="super">super</button>
+    </div>-->
     <div ref="editor"></div>
     <div class="preview" style="color: #666;">
       {{ value === '' ? 'preview' : value }}
     </div>
+    <button @click="change('fontType')">fontType</button>
+    <button @click="change('fontColor')">fontColor</button>
+    <button @click="change('fontShape')">fontShape</button>
   </div>
 </template>
 
 <script>
 import _Quill from 'quill'
+import { addQuillTitle } from './utils/quill-title'
+import initButton from './utils/initButton'
+import * as tools from './config/toolbar'
+import './formats'
+import './utils/poyfill'
+
 const Quill = window.Quill || _Quill
 const defaultOptions = {
   theme: 'snow',
@@ -32,35 +49,13 @@ const defaultOptions = {
       [{ align: [] }],
       ['clean'],
       ['link', 'image', 'video'],
+      ['grammarly-inline'],
+      ['shortcode'],
     ],
   },
+  initButton,
   placeholder: '请输入你的内容',
   readOnly: false,
-}
-
-if (typeof Object.assign !== 'function') {
-  Object.defineProperty(Object, 'assign', {
-    value(target, varArgs, ...rest) {
-      const arg = [target, varArgs, ...rest]
-      if (target == null) {
-        throw new TypeError('Cannot convert undefined or null to object')
-      }
-      const to = Object(target)
-      for (let index = 1; index < arg.length; index++) {
-        const nextSource = arg[index]
-        if (nextSource != null) {
-          for (const nextKey in nextSource) {
-            if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-              to[nextKey] = nextSource[nextKey]
-            }
-          }
-        }
-      }
-      return to
-    },
-    writable: true,
-    configurable: true,
-  })
 }
 
 export default {
@@ -92,12 +87,20 @@ export default {
   },
   mounted() {
     this.initialize()
+    addQuillTitle()
+    defaultOptions.initButton()
   },
   beforeDestroy() {
     this.quill = null
     delete this.quill
   },
   methods: {
+    change(type) {
+      const toolbar = document.getElementsByClassName('ql-toolbar')[0]
+      if (toolbar != null) toolbar.parentNode.removeChild(toolbar)
+      this.defaultOptions.modules.toolbar = tools[type]
+      this.initialize()
+    },
     // 初始化
     initialize() {
       if (this.$el) {
