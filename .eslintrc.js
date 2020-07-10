@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/prettier'],
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: 'babel-eslint',
   },
   rules: {
     // 0，1，2 分别表示 off, warning, error
@@ -123,8 +123,8 @@ module.exports = {
       2,
       'always',
       {
-        null: 'ignore'
-      }
+        null: 'ignore',
+      },
     ],
 
     // for 循环不得因方向错误造成死循环
@@ -154,8 +154,8 @@ module.exports = {
     'getter-return': [
       2,
       {
-        allowImplicit: true
-      }
+        allowImplicit: true,
+      },
     ],
 
     // require 必须在全局作用域下
@@ -239,8 +239,8 @@ module.exports = {
     'new-cap': [
       2,
       {
-        capIsNew: false // 允许大写开头的函数直接执行
-      }
+        capIsNew: false, // 允许大写开头的函数直接执行
+      },
     ],
 
     // new 关键字后类应包含圆括号
@@ -288,8 +288,8 @@ module.exports = {
     'no-confusing-arrow': [
       2,
       {
-        allowParens: true
-      }
+        allowParens: true,
+      },
     ],
 
     // 禁止使用 console，线上环境检测
@@ -302,8 +302,8 @@ module.exports = {
     'no-constant-condition': [
       2,
       {
-        checkLoops: false
-      }
+        checkLoops: false,
+      },
     ],
 
     // 禁止对 const 定义重新赋值
@@ -356,8 +356,8 @@ module.exports = {
     'no-empty': [
       2,
       {
-        allowEmptyCatch: true
-      }
+        allowEmptyCatch: true,
+      },
     ],
 
     // 禁止 == 和 != 与 null 做比较，必须用 === 或 !==
@@ -374,8 +374,8 @@ module.exports = {
     'no-extend-native': [
       2,
       {
-        exceptions: ['Array', 'Object']
-      }
+        exceptions: ['Array', 'Object'],
+      },
     ],
 
     // 禁止额外的 bind
@@ -398,8 +398,8 @@ module.exports = {
     'no-fallthrough': [
       2,
       {
-        commentPattern: '.'
-      }
+        commentPattern: '.',
+      },
     ],
 
     // 不允许使用 2. 或 .5 来表示数字，需要用 2、2.0、0.5 的格式
@@ -415,8 +415,8 @@ module.exports = {
     'no-implicit-coercion': [
       2,
       {
-        allow: ['+', '!!'] // 允许 + 转数值 "" + 转字符串和 !! 转布尔值
-      }
+        allow: ['+', '!!'], // 允许 + 转数值 "" + 转字符串和 !! 转布尔值
+      },
     ],
 
     // 禁止在 setTimeout 和 setInterval 中传入字符串，因会触发隐式 eval
@@ -446,8 +446,8 @@ module.exports = {
         skipStrings: true, // 允许在字符串中使用
         skipComments: true, // 允许在注释中使用
         skipRegExps: true, // 允许在正则表达式中使用
-        skipTemplates: true // 允许在模板字符串中使用
-      }
+        skipTemplates: true, // 允许在模板字符串中使用
+      },
     ],
 
     // 禁止使用 __iterator__
@@ -477,8 +477,8 @@ module.exports = {
     'no-mixed-operators': [
       2,
       {
-        groups: [['&&', '||']]
-      }
+        groups: [['&&', '||']],
+      },
     ],
 
     // 相同类型的 require 必须放在一起
@@ -503,8 +503,8 @@ module.exports = {
       {
         max: 3, // 文件内最多连续 3 个
         maxEOF: 1, // 文件末尾最多连续 1 个
-        maxBOF: 1 // 文件头最多连续 1 个
-      }
+        maxBOF: 1, // 文件头最多连续 1 个
+      },
     ],
 
     // 禁止 if 中出现否定表达式 !==
@@ -647,8 +647,8 @@ module.exports = {
       2,
       {
         skipBlankLines: true, // 不检查空行
-        ignoreComments: true // 不检查注释
-      }
+        ignoreComments: true, // 不检查注释
+      },
     ],
 
     // 禁止将 undefined 赋值给变量
@@ -674,8 +674,8 @@ module.exports = {
     'no-unneeded-ternary': [
       2,
       {
-        defaultAssignment: false
-      }
+        defaultAssignment: false,
+      },
     ],
 
     // 禁止出现不可到达的代码，如在 return、throw 之后的代码
@@ -693,8 +693,8 @@ module.exports = {
       {
         allowShortCircuit: true, // 允许使用 a() || b 或 a && b()
         allowTernary: true, // 允许在表达式中使用三元运算符
-        allowTaggedTemplates: true // 允许标记模板字符串
-      }
+        allowTaggedTemplates: true, // 允许标记模板字符串
+      },
     ],
 
     // 禁止定义不使用的 label
@@ -707,8 +707,8 @@ module.exports = {
         vars: 'all', // 变量定义必须被使用
         args: 'none', // 对于函数形参不检测
         ignoreRestSiblings: true, // 忽略剩余子项 fn(...args)，{a, b, ...coords}
-        caughtErrors: 'none' // 忽略 catch 语句的参数使用
-      }
+        caughtErrors: 'none', // 忽略 catch 语句的参数使用
+      },
     ],
 
     // 禁止在变量被定义之前使用它
@@ -716,8 +716,8 @@ module.exports = {
       2,
       {
         functions: false, // 允许函数在定义之前被调用
-        classes: false // 允许类在定义之前被引用
-      }
+        classes: false, // 允许类在定义之前被引用
+      },
     ],
 
     // 禁止不必要的 call 和 apply
@@ -784,8 +784,8 @@ module.exports = {
     'one-var': [
       2,
       {
-        const: 'never' // 所有 const 声明必须独占一行，不允许用逗号定义多个
-      }
+        const: 'never', // 所有 const 声明必须独占一行，不允许用逗号定义多个
+      },
     ],
 
     // 必须使用 x = x + y 而不是 x += y
@@ -839,8 +839,8 @@ module.exports = {
       'single',
       {
         avoidEscape: true, // 允许包含单引号的字符串使用双引号
-        allowTemplateLiterals: true // 允许使用模板字符串
-      }
+        allowTemplateLiterals: true, // 允许使用模板字符串
+      },
     ],
 
     // 对象字面量的键名禁止用引号括起来
@@ -907,8 +907,8 @@ module.exports = {
       2,
       {
         words: true,
-        nonwords: false
-      }
+        nonwords: false,
+      },
     ],
 
     // 注释的斜线和星号后要加空格
@@ -918,9 +918,9 @@ module.exports = {
       {
         block: {
           exceptions: ['*'],
-          balanced: true
-        }
-      }
+          balanced: true,
+        },
+      },
     ],
 
     // 禁用严格模式，禁止在任何地方出现 "use strict"
@@ -976,8 +976,8 @@ module.exports = {
     'vue/no-parsing-error': [
       2,
       {
-        'x-invalid-end-tag': false
-      }
-    ]
-  }
-};
+        'x-invalid-end-tag': false,
+      },
+    ],
+  },
+}
