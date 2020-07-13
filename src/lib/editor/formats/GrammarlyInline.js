@@ -1,10 +1,16 @@
 import Quill from 'quill'
+const Cursor = Quill.import('blots/block/embed')
+const all = Quill.import('blots/block')
+console.log(all)
 
-const Inline = Quill.import('blots/inline')
-
-class GrammarlyInline extends Inline {}
-GrammarlyInline.tagName = 'G'
+class GrammarlyInline extends Cursor {
+  static create(value) {
+    const node = super.create(value)
+    // node.innerHTML = value
+    return node
+  }
+}
+GrammarlyInline.tagName = 'hr'
 GrammarlyInline.blotName = 'grammarly-inline'
-GrammarlyInline.className = 'gr_'
 
 export default GrammarlyInline

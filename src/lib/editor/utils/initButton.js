@@ -6,7 +6,7 @@ const initButton = () => {
   grammarlyInline.style.cssText =
     'width:120px; border:1px solid #ccc; border-radius:5px;'
   shortcode.innerText = 'shortcode'
-  grammarlyInline.innerText = 'grammarlyInline'
+  grammarlyInline.innerText = 'insertHR'
 }
 
 export default initButton
