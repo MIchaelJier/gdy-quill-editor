@@ -3845,6 +3845,18 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.npm.taobao.org/functional-red-black-tree/download/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
+gdy-editor@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/gdy-editor/-/gdy-editor-0.1.1.tgz#be3427b22159bb104842f9cfbb28ef9f2bfd51ab"
+  integrity sha512-8BYWdubLCd8q5r275bteAKWKiACw0+k7dxvtBd5FNsx9u/0mCFw7cMip3S7Unmafxjl3cFRxLoRY4gzYaZDLAQ==
+  dependencies:
+    core-js "^3.6.5"
+    dplayer "^1.26.0"
+    hls.js "^0.14.1"
+    quill "2.0.0-dev.3"
+    quill-image-resize "^3.0.9"
+    vue "^2.6.11"
+
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.1"
   resolved "https://registry.npm.taobao.org/gensync/download/gensync-1.0.0-beta.1.tgz#58f4361ff987e5ff6e1e7a210827aa371eaac269"
@@ -6642,10 +6654,10 @@ quill-delta@^3.6.2:
     extend "^3.0.2"
     fast-diff "1.1.2"
 
-quill-image-resize-module@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/quill-image-resize-module/-/quill-image-resize-module-3.0.0.tgz#0fd93746a837336d95b2f536140416a623c71771"
-  integrity sha1-D9k3Rqg3M22VsvU2FAQWpiPHF3E=
+quill-image-resize@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/quill-image-resize/-/quill-image-resize-3.0.9.tgz#5677fb6257560bff951153ddbdb836758e49f804"
+  integrity sha512-5Dk0nixhbFsCwSWtPU9qqqtfM2gURfaP+pbBhQvAoMJoF4p99xbAibfAI3gsZJkbWUodoK2iAPf1V5oTSpv9ww==
   dependencies:
     lodash "^4.17.4"
     quill "^1.2.2"

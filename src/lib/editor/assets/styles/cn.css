@@ -132,3 +132,8 @@
 .dplayer * {
   white-space: nowrap !important
 }
+
+/* toolbar */
+.ql-toolbar {
+  text-align: left ;
+}

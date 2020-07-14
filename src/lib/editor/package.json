@@ -1,0 +1,19 @@
+{
+  "name": "gdy-editor",
+  "version": "0.1.1",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "main": "./editor.vue",
+  "author": "Michael",
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "dplayer": "^1.26.0",
+    "hls.js": "^0.14.1",
+    "quill": "2.0.0-dev.3",
+    "quill-image-resize": "^3.0.9",
+    "vue": "^2.6.11"
+  }
+}

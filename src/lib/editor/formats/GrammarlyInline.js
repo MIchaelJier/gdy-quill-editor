@@ -1,7 +1,5 @@
 import Quill from 'quill'
 const Cursor = Quill.import('blots/block/embed')
-const all = Quill.import('blots/block')
-console.log(all)
 
 class GrammarlyInline extends Cursor {
   static create(value) {

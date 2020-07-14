@@ -27,15 +27,10 @@ import _Quill from 'quill'
 import { addQuillTitle } from './utils/quill-title'
 import initButton from './utils/initButton'
 import * as tools from './config/toolbar'
-// import tableColumn from './assets/icons/tableColumn.svg'
-// import tableRow from './assets/icons/tableRow.svg'
-// import tableDeleteColumn from './assets/icons/tableColumn-d.svg'
-// import tableDeleteRow from './assets/icons/tableRow-d.svg'
 import './formats'
 import './modules'
 import './utils/poyfill'
 import './assets/styles/cn.css'
-// import func from '../../../vue-temp/vue-editor-bridge'
 const Quill = window.Quill || _Quill
 const defaultOptions = {
   theme: 'snow',
@@ -53,6 +48,9 @@ const defaultOptions = {
       userOnly: true,
     },
     table: true,
+    clipboard: {
+      matchVisual: false,
+    },
     toolbar: {
       container: tools.alltype,
       handlers: {
@@ -153,7 +151,7 @@ export default {
       if (toolbar != null) toolbar.parentNode.removeChild(toolbar)
       this.defaultOptions.modules.toolbar.container = tools[type]
       this.initialize(false)
-      // this.$refs.editor.children[0].innerHTML = dataContent
+      this.$refs.editor.children[0].innerHTML = dataContent
       // this.dataContent = dataContent
     },
     // 初始化
@@ -169,7 +167,8 @@ export default {
         this.quill.enable(false)
 
         if ((this.value || this.content) && first) {
-          this.quill.pasteHTML(this.value || this.content)
+          // this.quill.pasteHTML(this.value || this.content)
+          this.quill.dangerouslyPasteHTML(this.value || this.content)
         }
         if (!this.disabled) {
           this.quill.enable(true)

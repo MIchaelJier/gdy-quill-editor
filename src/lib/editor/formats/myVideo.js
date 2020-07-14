@@ -8,22 +8,22 @@ const ATTRIBUTES = ['height', 'width']
 class myVideo extends BlockEmbed {
   static create(value) {
     const node = super.create(value)
+    if (!value.id) {
+      return node
+    }
     node.setAttribute('controls', 'controls')
-    // m3u8
-    // node.setAttribute('type', 'video/mp4')
-    node.setAttribute('id', 'myVideo')
-    // node.setAttribute('width', '100px')
-    // node.setAttribute('height', '100px')
-    const src = this.sanitize(value)
-    node.setAttribute('src', this.sanitize(value))
+    node.setAttribute('id', value.id)
+    node.setAttribute('width', value.width || '100%')
+    node.setAttribute('height', value.height || '100%')
+    const src = this.sanitize(value.url)
+    node.setAttribute('src', src)
     setTimeout(() => {
       const myvideo = new Dplayer({
-        container: document.getElementById('myVideo'),
+        container: document.getElementById(value.id),
         video: {
           url: src,
-          type: 'auto',
-          pic: '',
-          title: '111',
+          type: value.type ? value.type : 'auto',
+          ...value,
         },
         pluginOptions: {
           hls: {
@@ -31,9 +31,8 @@ class myVideo extends BlockEmbed {
           },
         },
       })
-      console.log(myvideo)
       myvideo.play()
-    }, 1000)
+    }, 500)
     return node
   }
 
