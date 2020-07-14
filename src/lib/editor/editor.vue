@@ -32,6 +32,7 @@ import * as tools from './config/toolbar'
 // import tableDeleteColumn from './assets/icons/tableColumn-d.svg'
 // import tableDeleteRow from './assets/icons/tableRow-d.svg'
 import './formats'
+import './modules'
 import './utils/poyfill'
 import './assets/styles/cn.css'
 // import func from '../../../vue-temp/vue-editor-bridge'
@@ -43,6 +44,9 @@ const defaultOptions = {
   placeholder: '请输入你的内容',
   readOnly: false,
   modules: {
+    imageResize: {
+      displaySize: true,
+    },
     history: {
       delay: 2000,
       maxStack: 500,
@@ -188,6 +192,34 @@ export default {
         })
         this.$emit('ready', this.quill)
       }
+    },
+    // 插入自定义视频
+    addVideoLink(videoLink) {
+      const range = this.quill.getSelection()
+      let index = 0
+      if (range == null) {
+        index = 0
+      } else {
+        index = range.index
+      }
+      this.quill.insertEmbed(index, 'my-video', videoLink)
+    },
+    // 插入自定义link
+    // link :
+    // {
+    //  innerText: xxxxx,
+    //  dataValue: xxxxx,
+    //  href: xxxxx,
+    // }
+    addTextLink(link) {
+      const range = this.quill.getSelection()
+      let index = 0
+      if (range == null) {
+        index = 0
+      } else {
+        index = range.index
+      }
+      this.quill.insertEmbed(index, 'my-link', link)
     },
   },
   watch: {

@@ -13,6 +13,7 @@ const install = (Vue, globalOptions) => {
 }
 
 const gdyEditor = { Quill, yunEditor, install }
+window.Hls = require('hls.js')
 
 export default gdyEditor
 export { Quill, yunEditor, install }
