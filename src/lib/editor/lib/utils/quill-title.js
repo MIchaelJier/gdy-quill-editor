@@ -21,6 +21,16 @@ const titleConfig = {
   'ql-image': '图片',
   'ql-video': '视频',
   'ql-clean': '清除字体样式',
+  'ql-grammarly-inline': '插入分割线',
+  'ql-shortcode': '自定义命令',
+  'ql-table': '表格',
+  'ql-table-insert-row': '增加行',
+  'ql-table-insert-column': '增加列',
+  'ql-table-delete-row': '删除行',
+  'ql-table-delete-column': '删除列',
+  'ql-lineHeight': '行高',
+  'ql-history-back': '返回',
+  'ql-history-redo': '撤销返回',
 }
 
 export const addQuillTitle = () => {

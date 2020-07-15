@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import gdyEditor from 'gdy-quill-editor'
+import gdyEditor from './lib/editor'
+// import gdyEditor from './lib/editor/dist/gdy-editor'
 Vue.use(gdyEditor)
 
 Vue.config.productionTip = false

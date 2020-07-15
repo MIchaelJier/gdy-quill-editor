@@ -1,5 +1,6 @@
 import Quill from 'quill'
-import ImageResize from 'quill-image-resize'
-// import VideoResize from 'quill-video-resize-module'
-Quill.register('modules/imageResize', ImageResize)
-// Quill.register('modules/VideoResize', VideoResize)
+// 第三方modules
+import BlotFormatter from 'quill-blot-formatter'
+Quill.register('modules/blotFormatter', BlotFormatter)
+// import ImageResize from './imageResize/imageResize.js'
+// Quill.register('modules/imageResize', ImageResize)
