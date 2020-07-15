@@ -1,13 +1,9 @@
 {
-  "name": "gdy-editor",
-  "version": "0.1.1",
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "main": "./editor.vue",
+  "name": "gdy-quill-editor",
+  "version": "0.0.1",
+  "main": "./index.js",
   "author": "Michael",
+  "email":"chem908430737@icloud.com",
   "dependencies": {
     "core-js": "^3.6.5",
     "dplayer": "^1.26.0",
@@ -15,5 +11,10 @@
     "quill": "2.0.0-dev.3",
     "quill-image-resize": "^3.0.9",
     "vue": "^2.6.11"
-  }
+  },
+  "keywords": [
+    "quill",
+    "vue",
+    "editor"
+  ]
 }

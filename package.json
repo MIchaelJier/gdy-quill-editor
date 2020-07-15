@@ -10,7 +10,8 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "dplayer": "^1.26.0",
-    "gdy-editor": "^0.1.1",
+    "gdy-editor": "^0.1.2",
+    "gdy-quill-editor": "^0.0.1",
     "hls.js": "^0.14.1",
     "quill": "2.0.0-dev.3",
     "quill-image-resize": "^3.0.9",

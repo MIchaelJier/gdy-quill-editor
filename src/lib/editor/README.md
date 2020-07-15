@@ -4,6 +4,4 @@
 // your index.js
 import gdyEditor from './lib/editor'
 Vue.use(gdyEditor)
-// &&
-window.Hls = require('hls.js')
 ```

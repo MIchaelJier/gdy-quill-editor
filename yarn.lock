@@ -3845,10 +3845,22 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.npm.taobao.org/functional-red-black-tree/download/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
-gdy-editor@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/gdy-editor/-/gdy-editor-0.1.1.tgz#be3427b22159bb104842f9cfbb28ef9f2bfd51ab"
-  integrity sha512-8BYWdubLCd8q5r275bteAKWKiACw0+k7dxvtBd5FNsx9u/0mCFw7cMip3S7Unmafxjl3cFRxLoRY4gzYaZDLAQ==
+gdy-editor@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/gdy-editor/-/gdy-editor-0.1.2.tgz#943e0ed29b95b2d044b6ab47ea88d00c9cfcd1cc"
+  integrity sha512-rwIcULVjZUYQ8YtYOx91DR60st2Xom2igfOVwUUUQCrcDOPAgFKMJvWWpPbXPkYdkP12fuHJXjlv6Ekeq+KcCA==
+  dependencies:
+    core-js "^3.6.5"
+    dplayer "^1.26.0"
+    hls.js "^0.14.1"
+    quill "2.0.0-dev.3"
+    quill-image-resize "^3.0.9"
+    vue "^2.6.11"
+
+gdy-quill-editor@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/gdy-quill-editor/-/gdy-quill-editor-0.0.1.tgz#10e12661193e204e14501b52ee51213afa70b90d"
+  integrity sha512-CDHXojhYhoVUNU1qlbh2m9JRfTF3xkn2URTr4eH+jTZIcFG8FhB2lyEpPVk96jjVALuNzbn/hzHr6U+zMOXswQ==
   dependencies:
     core-js "^3.6.5"
     dplayer "^1.26.0"
