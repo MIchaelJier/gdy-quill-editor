@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import gdyEditor from './lib/editor'
+import gdyEditor from './lib/editor/lib'
 // import gdyEditor from './lib/editor/dist/gdy-editor'
 Vue.use(gdyEditor)
 

@@ -4,6 +4,7 @@ import tableRowD from '../assets/icons/tableRow-d.svg'
 import tableColumnD from '../assets/icons/tableColumn-d.svg'
 import historyBack from '../assets/icons/historyBack.svg'
 import historyRedo from '../assets/icons/historyRedo.svg'
+import grammarlyInline from '../assets/icons/grammarlyInline.svg'
 
 const button = (elem, options) => {
   if (elem.style && options.width && options.name) {
@@ -17,10 +18,10 @@ function initButton() {
     return
   }
   const shortcode = this.$el.querySelector('.ql-shortcode')
-  const grammarlyInline = this.$el.querySelector('.ql-grammarly-inline')
+  // const grammarlyInline = this.$el.querySelector('.ql-grammarly-inline')
 
   button(shortcode, { width: 80, name: '自定义命令' })
-  button(grammarlyInline, { width: 100, name: '插入分割线' })
+  // button(grammarlyInline, { width: 100, name: '插入分割线' })
 
   this.$el.querySelector('.ql-table-insert-row').innerHTML = tableRow
   this.$el.querySelector('.ql-table-insert-column').innerHTML = tableColumn
@@ -28,6 +29,7 @@ function initButton() {
   this.$el.querySelector('.ql-table-delete-column').innerHTML = tableColumnD
   this.$el.querySelector('.ql-history-back').innerHTML = historyBack
   this.$el.querySelector('.ql-history-redo').innerHTML = historyRedo
+  this.$el.querySelector('.ql-grammarly-inline').innerHTML = grammarlyInline
 }
 
 export default initButton

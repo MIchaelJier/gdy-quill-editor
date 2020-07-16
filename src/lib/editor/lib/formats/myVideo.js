@@ -13,8 +13,10 @@ class myVideo extends BlockEmbed {
     }
     node.setAttribute('controls', 'controls')
     node.setAttribute('id', value.id)
-    node.setAttribute('width', value.width || '100%')
-    node.setAttribute('height', value.height || '100%')
+    node.setAttribute(
+      'style',
+      `width:${value.width || '100%'};height:${value.height || '100%'};`
+    )
     const src = this.sanitize(value.url)
     node.setAttribute('src', src)
     setTimeout(() => {

@@ -31,9 +31,12 @@ import { handlers } from './config/handlers'
 import {
   AlignAction,
   DeleteAction,
-  ResizeAction,
   ImageSpec,
+  IframeVideoSpec,
 } from 'quill-blot-formatter'
+// import ResizeAction from 'quill-blot-formatter/dist/actions/ResizeAction'
+
+import ResizeActionPlus from './modules/ResizeActionPlus'
 
 import './formats'
 import './modules'
@@ -42,7 +45,7 @@ import './assets/styles/cn.css'
 
 class CustomImageSpec extends ImageSpec {
   getActions = () => {
-    return [AlignAction, DeleteAction, ResizeAction]
+    return [AlignAction, DeleteAction, ResizeActionPlus]
   }
 }
 
@@ -58,7 +61,7 @@ const defaultOptions = {
     //   displaySize: true,
     // },
     blotFormatter: {
-      specs: [CustomImageSpec],
+      specs: [CustomImageSpec, IframeVideoSpec],
       // overlay: {
       //   style: {
       //     border: '2px solid red',
