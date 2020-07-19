@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "dplayer": "^1.26.0",
+    "fuse.js": "^6.4.0",
     "gdy-editor": "^0.1.2",
     "gdy-quill-editor": "^0.0.1",
     "hls.js": "^0.14.1",
@@ -29,6 +30,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "prettier": "^2.0.5",
     "raw-loader": "^4.0.1",
+    "sass-loader": "^9.0.2",
     "svg-sprite-loader": "^5.0.0",
     "vue-template-compiler": "^2.6.11"
   },

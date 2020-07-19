@@ -24,15 +24,15 @@
     <button @click="insertLink()">
       插入link
     </button>
-    <div v-html="messages"></div>
+    <div v-html="messages" class="ql-editor"></div>
   </div>
 </template>
 
 <script>
 import '../lib/editor/lib/assets/styles/cn.css'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.bubble.css'
-import 'quill/dist/quill.snow.css'
+import '../../node_modules/quill/dist/quill.core.css'
+import '../../node_modules/quill/dist/quill.bubble.css'
+import '../../node_modules/quill/dist/quill.snow.css'
 export default {
   name: 'HelloWorld',
   data() {
@@ -62,8 +62,10 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import '../../node_modules/quill//dist/quill.core.css';
+@import '../../node_modules/quill//dist/quill.bubble.css';
+@import '../../node_modules/quill//dist/quill.snow.css';
 .editor {
   width: 100%;
   height: px2rem(200);

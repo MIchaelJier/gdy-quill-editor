@@ -38,6 +38,7 @@ const alltype = [
   ],
   [{ lineHeight: ['0-5', '0-75', '1', '1-5', '1-75', '2'] }],
   ['history-back', 'history-redo'],
+  ['emoji'],
 ]
 
 export { fontType, fontColor, fontShape, alltype }

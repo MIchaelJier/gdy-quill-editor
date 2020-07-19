@@ -15,26 +15,28 @@ class myVideo extends BlockEmbed {
     node.setAttribute('id', value.id)
     node.setAttribute(
       'style',
-      `width:${value.width || '100%'};height:${value.height || '100%'};`
+      `width:${value.width || '100%'};height:${
+        value.height || '100%'
+      };background:#000`
     )
     const src = this.sanitize(value.url)
     node.setAttribute('src', src)
-    setTimeout(() => {
-      const myvideo = new Dplayer({
-        container: document.getElementById(value.id),
-        video: {
-          url: src,
-          type: value.type ? value.type : 'auto',
-          ...value,
-        },
-        pluginOptions: {
-          hls: {
-            // hls config
-          },
-        },
-      })
-      myvideo.play()
-    }, 500)
+    // setTimeout(() => {
+    //   const myvideo = new Dplayer({
+    //     container: document.getElementById(value.id),
+    //     video: {
+    //       url: src,
+    //       type: value.type ? value.type : 'auto',
+    //       ...value,
+    //     },
+    //     pluginOptions: {
+    //       hls: {
+    //         // hls config
+    //       },
+    //     },
+    //   })
+    //   myvideo.play()
+    // }, 500)
     return node
   }
 

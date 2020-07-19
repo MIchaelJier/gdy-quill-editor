@@ -28,6 +28,7 @@ import { addQuillTitle } from './utils/quill-title'
 import initButton from './config/initButton'
 import * as tools from './config/toolbar'
 import { handlers } from './config/handlers'
+
 import {
   AlignAction,
   DeleteAction,
@@ -49,6 +50,23 @@ class CustomImageSpec extends ImageSpec {
   }
 }
 
+// import { emojis } from '@nutrify/quill-emoji-mart-picker/esm2015/quill-emoji-mart-picker'
+
+// // Optional custom emojis
+// const customEmojis = [
+//   {
+//     name: 'Test Flag',
+//     shortNames: ['test'],
+//     keywords: ['test', 'flag'],
+//     spriteUrl:
+//       'https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png',
+//     sheet_x: 1,
+//     sheet_y: 1,
+//     size: 64,
+//     sheetColumns: 52,
+//     sheetRows: 52,
+//   },
+// ]
 const Quill = window.Quill || _Quill
 const defaultOptions = {
   theme: 'snow',
@@ -56,6 +74,7 @@ const defaultOptions = {
   initButton,
   placeholder: '请输入你的内容',
   readOnly: false,
+  // formats: ['emoji'],
   modules: {
     // imageResize: {
     //   displaySize: true,
@@ -81,6 +100,16 @@ const defaultOptions = {
       container: tools.alltype,
       handlers: handlers,
     },
+    // 'emoji-module': {
+    //   emojiData: emojis,
+    //   customEmojiData: customEmojis,
+    //   preventDrag: true,
+    //   showTitle: true,
+    //   indicator: '*',
+    //   convertEmoticons: true,
+    //   convertShortNames: true,
+    //   set: () => 'apple', // 苹果图标
+    // },
   },
 }
 
