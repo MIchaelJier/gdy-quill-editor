@@ -40,7 +40,6 @@ import ResizeActionPlus from './modules/ResizeActionPlus'
 import './formats'
 import './modules'
 import './utils/poyfill'
-import './assets/styles/cn.css'
 
 class CustomImageSpec extends ImageSpec {
   getActions = () => {

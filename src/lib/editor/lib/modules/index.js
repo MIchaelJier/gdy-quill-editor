@@ -10,7 +10,11 @@ import BlotFormatter from 'quill-blot-formatter'
 import ShortNameEmoji from './module-emoji'
 import ToolbarEmoji from './module-toolbar-emoji'
 import TextAreaEmoji from './module-textarea-emoji'
+
+// css
 import '../assets/styles/scss/quill-emoji.scss'
+import '../assets/styles/cn.css'
+
 // import './scss/quill-emoji.scss'
 
 Quill.register(

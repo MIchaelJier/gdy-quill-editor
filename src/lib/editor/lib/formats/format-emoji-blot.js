@@ -15,7 +15,6 @@ class EmojiBlot extends Embed {
         EmojiBlot.buildSpan(valueObj, node)
       }
     }
-    debugger
     return node
   }
 
