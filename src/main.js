@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
 
-import gdyEditor from './lib/editor/lib'
-import './lib/editor/dist/main.css'
+import gdyEditor from 'gdy-quill-editor'
+import 'gdy-quill-editor/dist/main.css'
+// import gdyEditor from './lib/editor/lib'
+// import './lib/editor/dist/main.css'
 // import gdyEditor from './lib/editor/dist/gdy-editor'
 Vue.use(gdyEditor)
 
