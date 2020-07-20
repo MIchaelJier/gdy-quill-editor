@@ -31,6 +31,7 @@ const titleConfig = {
   'ql-lineHeight': '行高',
   'ql-history-back': '返回',
   'ql-history-redo': '撤销返回',
+  'ql-emoji': '表情',
 }
 
 export const addQuillTitle = () => {

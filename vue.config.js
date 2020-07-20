@@ -8,6 +8,7 @@ module.exports = {
   outputDir: 'dist',
   lintOnSave: false,
   productionSourceMap: false,
+
   devServer: {
     port: port,
     open: true,
@@ -16,6 +17,7 @@ module.exports = {
       errors: true,
     },
   },
+
   configureWebpack: {
     name: 'test',
     resolve: {
@@ -24,7 +26,8 @@ module.exports = {
       },
     },
   },
-  chainWebpack(config) {
+
+  chainWebpack: (config) => {
     config.module
       .rule('svg')
       .exclude.add(resolve('src/lib/editor/lib/assets/icons'))
@@ -35,5 +38,17 @@ module.exports = {
       .use('raw-loader')
       .loader('raw-loader')
       .end()
+  },
+
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'scss',
+      patterns: [
+        path.resolve(
+          __dirname,
+          'src/lib/quill-emoji/src/scss/core/_variables.scss'
+        ),
+      ],
+    },
   },
 }

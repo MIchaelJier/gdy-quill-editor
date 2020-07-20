@@ -29,4 +29,5 @@ export const handlers = {
     const length = this.quill.selection.savedRange.index
     this.quill.insertEmbed(length, 'grammarly-inline', '1')
   },
+  handlers: { emoji: function () {} },
 }

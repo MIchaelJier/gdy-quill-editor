@@ -28,14 +28,12 @@ import { addQuillTitle } from './utils/quill-title'
 import initButton from './config/initButton'
 import * as tools from './config/toolbar'
 import { handlers } from './config/handlers'
-
 import {
   AlignAction,
   DeleteAction,
   ImageSpec,
   IframeVideoSpec,
 } from 'quill-blot-formatter'
-// import ResizeAction from 'quill-blot-formatter/dist/actions/ResizeAction'
 
 import ResizeActionPlus from './modules/ResizeActionPlus'
 
@@ -50,23 +48,6 @@ class CustomImageSpec extends ImageSpec {
   }
 }
 
-// import { emojis } from '@nutrify/quill-emoji-mart-picker/esm2015/quill-emoji-mart-picker'
-
-// // Optional custom emojis
-// const customEmojis = [
-//   {
-//     name: 'Test Flag',
-//     shortNames: ['test'],
-//     keywords: ['test', 'flag'],
-//     spriteUrl:
-//       'https://unpkg.com/emoji-datasource-twitter@4.0.4/img/twitter/sheets-256/64.png',
-//     sheet_x: 1,
-//     sheet_y: 1,
-//     size: 64,
-//     sheetColumns: 52,
-//     sheetRows: 52,
-//   },
-// ]
 const Quill = window.Quill || _Quill
 const defaultOptions = {
   theme: 'snow',
@@ -100,6 +81,8 @@ const defaultOptions = {
       container: tools.alltype,
       handlers: handlers,
     },
+    'emoji-toolbar': true,
+    'emoji-shortname': true,
     // 'emoji-module': {
     //   emojiData: emojis,
     //   customEmojiData: customEmojis,
