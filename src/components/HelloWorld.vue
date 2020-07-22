@@ -29,15 +29,11 @@
 </template>
 
 <script>
-import '../lib/editor/lib/assets/styles/cn.css'
-import '../../node_modules/quill/dist/quill.core.css'
-import '../../node_modules/quill/dist/quill.bubble.css'
-import '../../node_modules/quill/dist/quill.snow.css'
 export default {
   name: 'HelloWorld',
   data() {
     return {
-      messages: '',
+      messages: '<p>123</p><p>456</p>',
     }
   },
   methods: {

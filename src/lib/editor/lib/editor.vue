@@ -13,7 +13,7 @@
       <button class="ql-script" value="super">super</button>
     </div>-->
     <div ref="editor"></div>
-    <div class="preview" style="color: #666;">
+    <div class="preview" style="color: #666;" v-if="isShowCode">
       {{ value === '' ? 'preview' : value }}
     </div>
     <button @click="change('fontType')">fontType</button>
@@ -108,6 +108,10 @@ export default {
   props: {
     content: String,
     value: String,
+    isShowCode: {
+      type: Boolean,
+      default: false,
+    },
     disabled: {
       type: Boolean,
       default: false,
@@ -141,8 +145,8 @@ export default {
       if (toolbar != null) toolbar.parentNode.removeChild(toolbar)
       this.defaultOptions.modules.toolbar.container = tools[type]
       this.initialize(false)
-      this.$refs.editor.children[0].innerHTML = dataContent
-      // this.dataContent = dataContent
+      // this.$refs.editor.children[0].innerHTML = dataContent
+      this.quill.clipboard.dangerouslyPasteHTML(dataContent)
     },
     // 初始化
     initialize(first = true) {
@@ -158,7 +162,8 @@ export default {
 
         if ((this.value || this.content) && first) {
           // this.quill.pasteHTML(this.value || this.content)
-          this.quill.dangerouslyPasteHTML(this.value || this.content)
+          this.quill.clipboard.dangerouslyPasteHTML(this.value || this.content)
+          // this.quill.setText(this.value || this.content)
         }
         if (!this.disabled) {
           this.quill.enable(true)
