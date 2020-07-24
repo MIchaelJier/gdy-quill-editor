@@ -1,6 +1,17 @@
 <template>
   <div class="hello">
-    <gdy-editor class="editor" v-model="messages" ref="editor"></gdy-editor>
+    <gdy-editor
+      class="editor"
+      v-model="messages"
+      ref="editor"
+      isShowCode
+      :toolbarOptions="toolbarOptions"
+    >
+    </gdy-editor>
+    <button @click="$refs.editor.change('fontType')">fontType</button>
+    <button @click="$refs.editor.change('fontColor')">fontColor</button>
+    <button @click="$refs.editor.change('fontShape')">fontShape</button>
+    <button @click="$refs.editor.change('other')">other</button>
     <button
       @click="
         insertVedio(
@@ -24,17 +35,25 @@
     <button @click="insertLink()">
       插入link
     </button>
-    <div v-html="messages" class="ql-editor"></div>
+    <div v-html="messages" class="ql-editor other"></div>
   </div>
 </template>
 
 <script>
+import Dplayer from 'dplayer'
 export default {
   name: 'HelloWorld',
   data() {
     return {
-      messages: '<p>123</p><p>456</p>',
+      messages:
+        '<p><img src="https://static-pro.guangdianyun.tv/1000/cms/20200724/557d09308f3be73222d6d2aad9550e24.png" height="96" width="96" data-align="center" style="display: block; margin: auto;"></p><p class="ql-align-center"><span style="background-color: rgb(230, 0, 0);">test</span></p>',
+      toolbarOptions: {
+        container: [],
+      },
     }
+  },
+  mounted() {
+    console.log(this.$refs.editor.quill)
   },
   methods: {
     insertVedio(url, id) {
@@ -42,8 +61,10 @@ export default {
       const video = {
         url,
         id,
-        height: '100px',
-        width: '300px',
+        height: '100',
+        width: '300',
+        poster:
+          'http://cdn-dvr.aodianyun.com/pic/live-vod/images/guangdianyun_41250.program_live_channel_1000209.1595559697',
       }
       this.$refs.editor.addVideoLink(video)
     },
@@ -53,6 +74,29 @@ export default {
         innerText: 'test',
         href: 'https://www.baidu.com',
       })
+    },
+  },
+  watch: {
+    messages(newval) {
+      function HTMLDecode(text) {
+        let temp = document.createElement('div')
+        temp.innerHTML = text
+        const output = temp.innerText || temp.textContent
+        temp = null
+        return JSON.parse(output)
+      }
+      const imgReg = /<div [^>]*data-options=['"]([^'"]+)[^>]*>/gi
+      const srcReg = /data-options=[\'\"]?([^\'\"]*)[\'\"]?/i
+      const arr = newval.match(imgReg)
+      for (let i = 0; i < arr.length; i++) {
+        const options = arr[i].match(srcReg)
+        // setTimeout(() => {
+        //   const op = HTMLDecode(options[1])
+        //   op.container = document.getElementById(op.container)
+        //   const myvideo = new Dplayer(op)
+        //   myvideo.play()
+        // }, 500)
+      }
     },
   },
 }

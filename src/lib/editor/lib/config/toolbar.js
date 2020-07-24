@@ -11,24 +11,39 @@ const fontShape = [
   [{ size: ['small', false, 'large', 'huge'] }],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
+  [{ lineHeight: ['0-5', '0-75', '1', '1-5', '1-75', '2'] }],
 ]
-
-const alltype = [
-  ['bold', 'italic', 'underline', 'strike'],
+const other = [
+  ['history-back', 'history-redo'],
   ['blockquote', 'code-block'],
-  [{ list: 'ordered' }, { list: 'bullet' }],
-  [{ script: 'sub' }, { script: 'super' }],
-  [{ indent: '-1' }, { indent: '+1' }],
-  [{ direction: 'rtl' }],
-  [{ size: ['small', false, 'large', 'huge'] }],
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ color: [] }, { background: [] }],
-  [{ font: [] }],
-  [{ align: [] }],
-  ['clean'],
+  [{ list: 'ordered' }, { list: 'bullet' }, { direction: 'rtl' }],
   ['link', 'image', 'video'],
   ['grammarly-inline'],
   ['emoji'],
+  ['clean'],
+]
+
+const alltype = [
+  ['history-back', 'history-redo'],
+  ['bold', 'strike', 'italic', 'underline', 'blockquote'],
+  [
+    { header: [1, 2, 3, 4, 5, 6, false] },
+    { font: [] },
+    { size: ['small', false, 'large', 'huge'] },
+    { color: [] },
+    { background: [] },
+  ],
+  [{ lineHeight: ['0-5', '0-75', '1', '1-5', '1-75', '2'] }],
+  [{ list: 'ordered' }, { list: 'bullet' }, 'grammarly-inline', 'code-block'],
+  [
+    { script: 'sub' },
+    { script: 'super' },
+    { indent: '-1' },
+    { indent: '+1' },
+    { direction: 'rtl' },
+    { align: [] },
+  ],
+  ['emoji', 'link', 'image', 'video'],
   // ['shortcode'],
   [
     { table: 'TD' },
@@ -37,8 +52,7 @@ const alltype = [
     { 'table-delete-row': 'TDR' },
     { 'table-delete-column': 'TDC' },
   ],
-  [{ lineHeight: ['0-5', '0-75', '1', '1-5', '1-75', '2'] }],
-  ['history-back', 'history-redo'],
+  ['clean'],
 ]
 
-export { fontType, fontColor, fontShape, alltype }
+export { fontType, fontColor, fontShape, alltype, other }

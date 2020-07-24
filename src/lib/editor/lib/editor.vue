@@ -16,9 +16,6 @@
     <div class="preview" style="color: #666;" v-if="isShowCode">
       {{ value === '' ? 'preview' : value }}
     </div>
-    <button @click="change('fontType')">fontType</button>
-    <button @click="change('fontColor')">fontColor</button>
-    <button @click="change('fontShape')">fontShape</button>
   </div>
 </template>
 
@@ -82,16 +79,6 @@ const defaultOptions = {
     },
     'emoji-toolbar': true,
     'emoji-shortname': true,
-    // 'emoji-module': {
-    //   emojiData: emojis,
-    //   customEmojiData: customEmojis,
-    //   preventDrag: true,
-    //   showTitle: true,
-    //   indicator: '*',
-    //   convertEmoticons: true,
-    //   convertShortNames: true,
-    //   set: () => 'apple', // 苹果图标
-    // },
   },
 }
 
@@ -126,13 +113,14 @@ export default {
       required: false,
       default: () => ({}),
     },
+    toolbarOptions: {
+      type: Object,
+      required: false,
+      default: () => ({}),
+    },
   },
   mounted() {
-    this.initialize()
-    addQuillTitle()
-    defaultOptions.$el = this.$el
-    defaultOptions.initButton()
-    delete defaultOptions.$el
+    this.init()
   },
   beforeDestroy() {
     this.quill = null
@@ -144,11 +132,18 @@ export default {
       const toolbar = document.getElementsByClassName('ql-toolbar')[0]
       if (toolbar != null) toolbar.parentNode.removeChild(toolbar)
       this.defaultOptions.modules.toolbar.container = tools[type]
-      this.initialize(false)
+      this.init(false)
       // this.$refs.editor.children[0].innerHTML = dataContent
       this.quill.clipboard.dangerouslyPasteHTML(dataContent)
     },
     // 初始化
+    init(flag = true) {
+      this.initialize(flag)
+      addQuillTitle()
+      defaultOptions.$el = this.$el
+      defaultOptions.initButton()
+      delete defaultOptions.$el
+    },
     initialize(first = true) {
       if (this.$el) {
         this.dataOptions = Object.assign(
@@ -157,13 +152,24 @@ export default {
           this.globalOptions,
           this.options
         )
+        if (Object.keys(this.toolbarOptions).length > 0) {
+          this.dataOptions.modules.toolbar = this.toolbarOptions
+        }
         this.quill = new Quill(this.$refs.editor, this.dataOptions)
         this.quill.enable(false)
 
         if ((this.value || this.content) && first) {
           // this.quill.pasteHTML(this.value || this.content)
-          this.quill.clipboard.dangerouslyPasteHTML(this.value || this.content)
-          // this.quill.setText(this.value || this.content)
+          this.quill.clipboard.dangerouslyPasteHTML(
+            `${this.value || this.content}<span></span>`
+          )
+          // const clipboard = this.quill.getModule('clipboard')
+          // const pastedDelta = clipboard.convert({
+          //   html: this.value || this.content,
+          //   text: '',
+          // })
+          // const delta = new Delta().retain(0).delete(0).concat(pastedDelta)
+          // this.quill.updateContents(delta, Quill.sources.USER)
         }
         if (!this.disabled) {
           this.quill.enable(true)
@@ -221,7 +227,7 @@ export default {
       if (this.quill) {
         if (newVal && newVal !== this.dataContent) {
           this.dataContent = newVal
-          this.quill.pasteHTML(newVal)
+          this.quill.dangerouslyPasteHTML(newVal)
         } else if (!newVal) {
           this.quill.setText('')
         }
@@ -231,7 +237,7 @@ export default {
       if (this.quill) {
         if (newVal && newVal !== this.dataContent) {
           this.dataContent = newVal
-          this.quill.pasteHTML(newVal)
+          this.quill.dangerouslyPasteHTML(newVal)
         } else if (!newVal) {
           this.quill.setText('')
         }

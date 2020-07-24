@@ -1,5 +1,6 @@
 import _Quill from 'quill'
 import yunEditor from './editor.vue'
+import Dplayer from 'dplayer'
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
@@ -16,4 +17,4 @@ const gdyEditor = { Quill, yunEditor, install }
 window.Hls = require('hls.js')
 
 export default gdyEditor
-export { Quill, yunEditor, install }
+export { Quill, Dplayer, yunEditor, install }

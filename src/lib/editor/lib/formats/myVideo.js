@@ -11,30 +11,40 @@ class myVideo extends BlockEmbed {
     if (!value.id) {
       return node
     }
+    const src = this.sanitize(value.url)
+    const videoOptions = {
+      container: value.id,
+      video: {
+        url: src,
+        type: value.type ? value.type : 'auto',
+        ...value,
+      },
+      pluginOptions: {
+        hls: {
+          // hls config
+        },
+      },
+    }
     node.setAttribute('controls', 'controls')
     node.setAttribute('id', value.id)
+    node.setAttribute('data-options', JSON.stringify(videoOptions))
     node.setAttribute(
       'style',
-      `width:${value.width || '100%'};height:${
-        value.height || '100%'
-      };background:#000`
+      `width:${value.width || '100'}px;height:${
+        value.height || '50'
+      }px;background-image:url('${value.poster}/${value.width}/${
+        value.height
+      }}) no-repeat;`
     )
-    const src = this.sanitize(value.url)
     node.setAttribute('src', src)
     // setTimeout(() => {
-    //   const myvideo = new Dplayer({
-    //     container: document.getElementById(value.id),
-    //     video: {
-    //       url: src,
-    //       type: value.type ? value.type : 'auto',
-    //       ...value,
-    //     },
-    //     pluginOptions: {
-    //       hls: {
-    //         // hls config
-    //       },
-    //     },
-    //   })
+    //   videoOptions.container = document.getElementById(videoOptions.container)
+    //   console.log(videoOptions)
+    // }, 500)
+    // setTimeout(() => {
+    //   videoOptions.container = document.getElementById(videoOptions.container)
+    //   console.log(videoOptions)
+    //   const myvideo = new Dplayer(videoOptions)
     //   myvideo.play()
     // }, 500)
     return node

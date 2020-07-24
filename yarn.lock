@@ -3970,10 +3970,10 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
-gdy-quill-editor@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.npm.taobao.org/gdy-quill-editor/download/gdy-quill-editor-0.0.3.tgz#7aa40d8e58c34a75654a836f717e4ea6bcadb566"
-  integrity sha1-eqQNjljDSnVlSoNvcX5OpryttWY=
+gdy-quill-editor@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/gdy-quill-editor/-/gdy-quill-editor-0.0.7.tgz#5ba62372606ed5525bc30f1e9bcf48a2ab9d5cf3"
+  integrity sha512-UB4xBKaEUzqAtIJnWk6/fQsrsKAJ+iwx/iEeIsvn9KuzkCi8RWD5hMa1RSP2+FnM2jOqLR2eRumbQcVYJKvQdw==
   dependencies:
     core-js "^3.6.5"
     dplayer "^1.26.0"

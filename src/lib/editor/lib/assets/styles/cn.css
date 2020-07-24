@@ -137,3 +137,6 @@
 .ql-toolbar {
   text-align: left ;
 }
+.ql-formats {
+  border-right: 1px solid #ddd
+}
