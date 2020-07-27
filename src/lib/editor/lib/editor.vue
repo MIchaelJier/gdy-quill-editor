@@ -31,7 +31,7 @@ import {
   ImageSpec,
   IframeVideoSpec,
 } from 'quill-blot-formatter'
-
+import DplayerSpec from './modules/VideoSpec'
 import ResizeActionPlus from './modules/ResizeActionPlus'
 
 import './formats'
@@ -39,6 +39,11 @@ import './modules'
 import './utils/poyfill'
 
 class CustomImageSpec extends ImageSpec {
+  getActions = () => {
+    return [AlignAction, DeleteAction, ResizeActionPlus]
+  }
+}
+class CustomVideoSpec extends DplayerSpec {
   getActions = () => {
     return [AlignAction, DeleteAction, ResizeActionPlus]
   }
@@ -57,7 +62,7 @@ const defaultOptions = {
     //   displaySize: true,
     // },
     blotFormatter: {
-      specs: [CustomImageSpec, IframeVideoSpec],
+      specs: [CustomImageSpec, IframeVideoSpec, CustomVideoSpec],
       // overlay: {
       //   style: {
       //     border: '2px solid red',
@@ -159,10 +164,12 @@ export default {
         this.quill.enable(false)
 
         if ((this.value || this.content) && first) {
-          // this.quill.pasteHTML(this.value || this.content)
-          this.quill.clipboard.dangerouslyPasteHTML(
-            `${this.value || this.content}<span></span>`
-          )
+          this.$nextTick(() => {
+            this.$refs.editor.children[0].innerHTML = `${
+              this.value || this.content
+            }`
+          })
+
           // const clipboard = this.quill.getModule('clipboard')
           // const pastedDelta = clipboard.convert({
           //   html: this.value || this.content,

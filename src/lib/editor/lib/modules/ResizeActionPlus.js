@@ -20,15 +20,44 @@ class ResizeActionPlus extends ResizeAction {
     box.addEventListener('touchmove', touchHandler, true)
     box.addEventListener('touchend', touchHandler, true)
     box.addEventListener('touchcancel', touchHandler, true)
-    // box.addEventListener('touchstart', (e) => {
-    //   this.onMouseDown(e)
-    //   // document.addEventListener(
-    //   //   'touchend',
-    //   //   this.onMouseUp && console.log(this.onMouseUp)
-    //   // )
-    //   document.addEventListener('touchmove', this.onDragPlus)
-    // })
     return box
+  }
+  onDrag = (MouseEvent) => {
+    if (!this.formatter.currentSpec) {
+      return
+    }
+
+    const target = this.formatter.currentSpec.getTargetElement()
+    if (!target) {
+      return
+    }
+
+    const deltaX = event.clientX - this.dragStartX
+    let newWidth = 0
+
+    if (
+      this.dragHandle === this.topLeftHandle ||
+      this.dragHandle === this.bottomLeftHandle
+    ) {
+      newWidth = Math.round(this.preDragWidth - deltaX)
+    } else {
+      newWidth = Math.round(this.preDragWidth + deltaX)
+    }
+
+    const newHeight = this.targetRatio * newWidth
+
+    target.setAttribute('width', `${newWidth}`)
+    target.setAttribute('height', `${newHeight}`)
+    target.setAttribute(
+      'style',
+      `${target
+        .getAttribute('style')
+        .replace(
+          /(\width:.*?\;)|(\height:.*?\;)/g,
+          ''
+        )};width:${newWidth}px;height:${newHeight}px`
+    )
+    this.formatter.update()
   }
 }
 
