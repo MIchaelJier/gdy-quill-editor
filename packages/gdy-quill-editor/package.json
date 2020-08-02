@@ -11,13 +11,11 @@
     "gdy"
   ],
   "dependencies": {
-    "core-js": "^3.6.5",
     "dplayer": "^1.26.0",
     "fuse.js": "^6.4.0",
     "hls.js": "^0.14.1",
     "quill": "2.0.0-dev.3",
-    "quill-blot-formatter": "^1.0.5",
-    "vue": "^2.6.11"
+    "quill-blot-formatter": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",

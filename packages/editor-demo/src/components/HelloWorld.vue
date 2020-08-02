@@ -94,9 +94,6 @@ export default {
 </script>
 
 <style scoped>
-@import '../../node_modules/quill//dist/quill.core.css';
-@import '../../node_modules/quill//dist/quill.bubble.css';
-@import '../../node_modules/quill//dist/quill.snow.css';
 .editor {
   width: 100%;
   height: px2rem(200);
