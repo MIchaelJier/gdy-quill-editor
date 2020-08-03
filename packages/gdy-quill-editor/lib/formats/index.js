@@ -5,6 +5,7 @@ import lineHeight from './lineHeight'
 import myVideo from './myVideo'
 import myLink from './myLink'
 import EmojiBlot from './format-emoji-blot'
+import './fontSize'
 
 // Quill.register(Shortcode)
 Quill.register(myVideo)

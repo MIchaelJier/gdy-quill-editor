@@ -38,7 +38,7 @@ export const addQuillTitle = () => {
   const oToolBar = document.querySelector('.ql-toolbar')
   const aButton = oToolBar.querySelectorAll('button')
   const aSelect = oToolBar.querySelectorAll('select')
-  aButton.forEach(function (item) {
+  aButton.forEach((item) => {
     if (item.className === 'ql-script') {
       item.value === 'sub' ? (item.title = '下标') : (item.title = '上标')
     } else if (item.className === 'ql-indent') {
@@ -49,7 +49,8 @@ export const addQuillTitle = () => {
       item.title = titleConfig[item.classList[0]]
     }
   })
-  aSelect.forEach(function (item) {
-    item.parentNode.title = titleConfig[item.classList[0]]
+  aSelect.forEach((item) => {
+    // item.parentNode.title = titleConfig[item.classList[0]]
+    item.previousSibling.title = titleConfig[item.classList[0]]
   })
 }

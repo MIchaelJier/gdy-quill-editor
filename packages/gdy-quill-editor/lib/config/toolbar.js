@@ -1,3 +1,4 @@
+import whitelist from '../formats/fontSize'
 const fontType = [
   ['bold'],
   ['italic'],
@@ -8,7 +9,7 @@ const fontType = [
 
 const fontColor = [[{ color: [] }, { background: [] }]]
 const fontShape = [
-  [{ size: ['small', false, 'large', 'huge'] }],
+  [{ size: whitelist }],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
   [{ lineHeight: ['0-5', '0-75', '1', '1-5', '1-75', '2'] }],
@@ -29,7 +30,7 @@ const alltype = [
   [
     { header: [1, 2, 3, 4, 5, 6, false] },
     { font: [] },
-    { size: ['small', false, 'large', 'huge'] },
+    { size: whitelist },
     { color: [] },
     { background: [] },
   ],
