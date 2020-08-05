@@ -22,7 +22,7 @@
 <script>
 import _Quill from 'quill'
 import { addQuillTitle } from './utils/quill-title'
-import initButton from './config/initButton'
+import { initButton, changePaste } from './config/initButton'
 import * as tools from './config/toolbar'
 import { handlers } from './config/handlers'
 import {
@@ -148,6 +148,7 @@ export default {
       defaultOptions.$el = this.$el
       defaultOptions.initButton()
       delete defaultOptions.$el
+      this.addHandlers()
     },
     initialize(first = true) {
       if (this.$el) {
@@ -200,6 +201,38 @@ export default {
         this.$emit('ready', this.quill)
       }
     },
+    // 增加 toolbar事件
+    addHandlers() {
+      const bar = this.quill.getModule('toolbar')
+      bar.addHandler('dangerously-paste', () => {
+        this.$refs.editor.removeEventListener(
+          'paste',
+          bar.handlers.selectionPaste,
+          true
+        )
+        // 禁用 quill 剪切板功能
+        if (this.quill.clipboard.matchers.length > 14) {
+          changePaste.call(this, false)
+          this.quill.clipboard.matchers.length = 14
+        } else {
+          changePaste.call(this, true)
+          this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+            delta.ops = delta.ops.map((op) => {
+              return {
+                insert: '',
+              }
+            })
+            return delta
+          })
+          // 监听浏览器 黏贴事件
+          this.$refs.editor.addEventListener(
+            'paste',
+            bar.handlers.selectionPaste,
+            true
+          )
+        }
+      })
+    },
     // 插入自定义视频
     addVideoLink(videoLink) {
       const range = this.quill.getSelection()
@@ -234,7 +267,7 @@ export default {
       if (this.quill) {
         if (newVal && newVal !== this.dataContent) {
           this.dataContent = newVal
-          this.quill.dangerouslyPasteHTML(newVal)
+          this.quill.clipboard.dangerouslyPasteHTML(newVal)
         } else if (!newVal) {
           this.quill.setText('')
         }
@@ -244,7 +277,7 @@ export default {
       if (this.quill) {
         if (newVal && newVal !== this.dataContent) {
           this.dataContent = newVal
-          this.quill.dangerouslyPasteHTML(newVal)
+          this.quill.clipboard.dangerouslyPasteHTML(newVal)
         } else if (!newVal) {
           this.quill.setText('')
         }

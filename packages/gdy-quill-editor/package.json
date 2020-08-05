@@ -1,6 +1,6 @@
 {
   "name": "gdy-quill-editor",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "./dist/gdy-editor",
   "author": "Michael",
   "email": "chem908430737@icloud.com",

@@ -5,6 +5,8 @@ import tableColumnD from '../assets/icons/tableColumn-d.svg'
 import historyBack from '../assets/icons/historyBack.svg'
 import historyRedo from '../assets/icons/historyRedo.svg'
 import grammarlyInline from '../assets/icons/grammarlyInline.svg'
+import paste from '../assets/icons/paste.svg'
+import pasteRed from '../assets/icons/paste-red.svg'
 import { Reflect } from 'core-js'
 
 const button = (elem, options) => {
@@ -27,6 +29,8 @@ function initButton() {
     { title: 'ql-history-back', inner: historyBack },
     { title: 'ql-history-redo', inner: historyRedo },
     { title: 'ql-grammarly-inline', inner: grammarlyInline },
+    { title: 'ql-grammarly-inline', inner: grammarlyInline },
+    { title: 'ql-dangerously-paste', inner: paste },
   ]
   querySelectorArr.forEach((item) => {
     const elem = this.$el.querySelector('.' + item.title)
@@ -43,4 +47,12 @@ function initButton() {
   })
 }
 
-export default initButton
+function changePaste(flag) {
+  if (!this.$el) {
+    return
+  }
+  const elem = this.$el.querySelector('.ql-dangerously-paste')
+  elem.innerHTML = flag ? pasteRed : paste
+}
+
+export { initButton, changePaste }

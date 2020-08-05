@@ -32,6 +32,7 @@ const titleConfig = {
   'ql-history-back': '返回',
   'ql-history-redo': '撤销返回',
   'ql-emoji': '表情',
+  'ql-dangerously-paste': '完全复制',
 }
 
 export const addQuillTitle = () => {

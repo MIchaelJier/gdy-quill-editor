@@ -53,7 +53,7 @@ const alltype = [
     { 'table-delete-row': 'TDR' },
     { 'table-delete-column': 'TDC' },
   ],
-  ['clean'],
+  ['dangerously-paste', 'clean'],
 ]
 
 export { fontType, fontColor, fontShape, alltype, other }

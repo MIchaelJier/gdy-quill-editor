@@ -29,4 +29,18 @@ export const handlers = {
     const length = this.quill.selection.savedRange.index
     this.quill.insertEmbed(length, 'grammarly-inline', '1')
   },
+  selectionPaste: function (evt) {
+    const clipdata = evt.clipboardData || window.clipboardData
+    const html = clipdata.getData('text/html')
+    const selection = window.getSelection()
+    const range = selection.getRangeAt(0)
+    range.setStart(range.endContainer, range.endOffset)
+    const pasteElement = document.createElement('p')
+    pasteElement.innerHTML = html
+    range.insertNode(pasteElement)
+    // appendHtml(document.getElementsByClassName('ql-editor')[0], html)
+  },
+  'dangerously-paste': function () {
+    // TODO  addHandler at editor.vue
+  },
 }
