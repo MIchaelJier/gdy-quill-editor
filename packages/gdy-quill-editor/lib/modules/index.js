@@ -14,6 +14,7 @@ import TextAreaEmoji from './module-textarea-emoji'
 // css
 import '../assets/styles/scss/quill-emoji.scss'
 import '../assets/styles/cn.css'
+import '../assets/styles/data-title.css'
 
 // import './scss/quill-emoji.scss'
 

@@ -34,24 +34,38 @@ const titleConfig = {
   'ql-emoji': '表情',
   'ql-dangerously-paste': '完全复制',
 }
-
+export const detaTitle = () => {
+  const data_title = document
+    .querySelector('.ql-toolbar')
+    .querySelectorAll('[data-title]')
+  for (let i = 0; i < data_title.length; i++) {
+    data_title[i].setAttribute(
+      'data-title',
+      data_title[i].getAttribute('title')
+    )
+    data_title[i].removeAttribute('title')
+  }
+}
 export const addQuillTitle = () => {
   const oToolBar = document.querySelector('.ql-toolbar')
   const aButton = oToolBar.querySelectorAll('button')
   const aSelect = oToolBar.querySelectorAll('select')
   aButton.forEach((item) => {
     if (item.className === 'ql-script') {
-      item.value === 'sub' ? (item.title = '下标') : (item.title = '上标')
+      item.value === 'sub'
+        ? (item.dataset.title = '下标')
+        : (item.dataset.title = '上标')
     } else if (item.className === 'ql-indent') {
       item.value === '+1'
-        ? (item.title = '向右缩进')
-        : (item.title = '向左缩进')
+        ? (item.dataset.title = '向右缩进')
+        : (item.dataset.title = '向左缩进')
     } else {
-      item.title = titleConfig[item.classList[0]]
+      item.dataset.title = titleConfig[item.classList[0]]
     }
   })
   aSelect.forEach((item) => {
     // item.parentNode.title = titleConfig[item.classList[0]]
-    item.previousSibling.title = titleConfig[item.classList[0]]
+    item.previousSibling.dataset.title = titleConfig[item.classList[0]]
   })
+  // detaTitle()
 }

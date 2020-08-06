@@ -13,7 +13,7 @@ const install = (Vue, globalOptions) => {
   Vue.component(yunEditor.name, yunEditor)
 }
 
-const gdyEditor = { Quill, yunEditor, install }
+const gdyEditor = { Quill, yunEditor, install, Dplayer }
 window.Hls = require('hls.js')
 
 export default gdyEditor
