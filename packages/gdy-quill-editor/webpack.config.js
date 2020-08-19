@@ -6,6 +6,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: './lib/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -112,7 +113,7 @@ module.exports = {
         sourceMap: true,
         terserOptions: {
           compress: {
-            // drop_console: true,
+            drop_console: true,
           },
         },
       }),

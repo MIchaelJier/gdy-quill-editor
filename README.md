@@ -1,7 +1,7 @@
 # yuneditor
 
 ## gdy-quill-editor
-基于Quill的vue编辑器组件 
+基于Quill的vue编辑器组件 npm@0.0.14
 ``` javascript
 "quill": "2.0.0-dev.3"
 ```
@@ -19,7 +19,7 @@ yarn servedemo
 
 ### Download
 ```
-npm install gdy-quill-editor / yarn add gdy-quill-editor
+npm install / yarn add gdy-quill-editor 
 ```
 ``` javascript
 // VUE Global registration

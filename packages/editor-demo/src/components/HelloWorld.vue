@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { Dplayer } from 'gdy-quill-editor'
 export default {
   name: 'HelloWorld',
   data() {
@@ -68,27 +69,28 @@ export default {
     },
   },
   watch: {
-    // messages(newval) {
-    //   function HTMLDecode(text) {
-    //     let temp = document.createElement('div')
-    //     temp.innerHTML = text
-    //     const output = temp.innerText || temp.textContent
-    //     temp = null
-    //     return JSON.parse(output)
-    //   }
-    //   const imgReg = /<div [^>]*data-options=['"]([^'"]+)[^>]*>/gi
-    //   const srcReg = /data-options=[\'\"]?([^\'\"]*)[\'\"]?/i
-    //   const arr = newval.match(imgReg)
-    //   for (let i = 0; i < arr.length; i++) {
-    //     const options = arr[i].match(srcReg)
-    //     setTimeout(() => {
-    //       const op = HTMLDecode(options[1])
-    //       op.container = document.getElementById(op.container)
-    //       const myvideo = new Dplayer(op)
-    //       myvideo.play()
-    //     }, 500)
-    //   }
-    // },
+    messages(newval) {
+      function HTMLDecode(text) {
+        let temp = document.createElement('div')
+        temp.innerHTML = text
+        const output = temp.innerText || temp.textContent
+        temp = null
+        return JSON.parse(output)
+      }
+      const imgReg = /<div [^>]*data-options=['"]([^'"]+)[^>]*>/gi
+      const srcReg = /data-options=[\'\"]?([^\'\"]*)[\'\"]?/i
+      const arr = newval.match(imgReg)
+      if (!arr) return
+      for (let i = 0; i < arr.length; i++) {
+        const options = arr[i].match(srcReg)
+        setTimeout(() => {
+          const op = HTMLDecode(options[1])
+          op.container = document.querySelectorAll('#' + op.container)[1]
+          const myvideo = new Dplayer(op)
+          myvideo.play()
+        }, 500)
+      }
+    },
   },
 }
 </script>
@@ -97,5 +99,9 @@ export default {
 .editor {
   width: 100%;
   height: px2rem(200);
+}
+.ql-toolbar {
+  position: fixed;
+  bottom: 0;
 }
 </style>
