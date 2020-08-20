@@ -6464,6 +6464,17 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
+gdy-quill-editor@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.npm.taobao.org/gdy-quill-editor/download/gdy-quill-editor-0.0.11.tgz#dc36f5e2812371b12f70fbe8a7bd9d000934e6fc"
+  integrity sha1-3Db14oEjcbEvcPvop72dAAk05vw=
+  dependencies:
+    dplayer "^1.26.0"
+    fuse.js "^6.4.0"
+    hls.js "^0.14.1"
+    quill "2.0.0-dev.3"
+    quill-blot-formatter "^1.0.5"
+
 genfun@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npm.taobao.org/genfun/download/genfun-5.0.0.tgz#9dd9710a06900a5c4a5bf57aca5da4e52fe76537"
@@ -12950,6 +12961,11 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
+
+vconsole@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.npm.taobao.org/vconsole/download/vconsole-3.3.4.tgz#a7dacd8887b3d3e902e8d18425cda56c34e77f51"
+  integrity sha1-p9rNiIez0+kC6NGEJc2lbDTnf1E=
 
 vendors@^1.0.0:
   version "1.0.4"

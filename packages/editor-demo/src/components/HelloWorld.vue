@@ -1,6 +1,58 @@
 <template>
   <div class="hello">
-    <gdy-editor class="editor" v-model="messages" ref="editor" isShowCode>
+    {{ token && `用户token：${token}` }}
+    <!-- 自定义toolbar 开始 -->
+    <div id="toolbar" v-if="isPhone">
+      <button
+        class="ql-font"
+        :class="fontShow ? 'active' : ''"
+        @click="fontShow = !fontShow"
+      >
+        <i class="iconfont icon-ziti"></i>
+        <div class="pop" v-show="fontShow">
+          <button class="ql-bold"></button>
+          <button class="ql-italic"></button>
+          <button class="ql-header">
+            <i class="iconfont icon-biaotizhengwenqiehuan"></i>
+          </button>
+          <button class="ql-underline"></button>
+          <button class="ql-strike"></button>
+          <button class="ql-grammarly-inline">
+            <i class="iconfont icon-jianxianxing"></i>
+          </button>
+        </div>
+      </button>
+      <select class="ql-color"></select>
+      <select class="ql-background"></select>
+      <button
+        class="ql-font"
+        :class="layoutShow ? 'active' : ''"
+        @click="layoutShow = !layoutShow"
+      >
+        <i class="iconfont icon-buju"></i>
+        <div class="pop" v-show="layoutShow">
+          <button class="ql-list" value="ordered"></button>
+          <button class="ql-list" value="bullet"></button>
+          <button class="ql-align" value="justify"></button>
+          <button class="ql-align" value="right"></button>
+          <button class="ql-align" value="center"></button>
+        </div>
+      </button>
+      <button class="ql-image"></button>
+      <button class="ql-history-back">
+        <i class="iconfont icon-7chexiao"></i>
+      </button>
+      <button class="ql-history-redo">
+        <i class="iconfont icon-fanchexiao"></i>
+      </button>
+    </div>
+    <!-- 自定义toolbar 结束 -->
+    <gdy-editor
+      class="editor"
+      v-model="messages"
+      ref="editor"
+      :toolbarOptions="toolbarOptions"
+    >
     </gdy-editor>
     <button @click="$refs.editor.change('fontType')">fontType</button>
     <button @click="$refs.editor.change('fontColor')">fontColor</button>
@@ -34,22 +86,87 @@
 </template>
 
 <script>
-import { Dplayer } from 'gdy-quill-editor'
+import Dplayer from 'dplayer'
+import VConsole from 'vconsole'
+import { handlers } from 'gdy-quill-editor/lib/config/handlers'
 export default {
   name: 'HelloWorld',
   data() {
     return {
       messages:
         '<p><img src="https://static-pro.guangdianyun.tv/1000/cms/20200724/557d09308f3be73222d6d2aad9550e24.png" height="96" width="96" data-align="center" style="display: block; margin: auto;"></p><p class="ql-align-center"><span style="background-color: rgb(230, 0, 0);">test</span></p><span contenteditable="false"><span class="ap ap-hugging_face">🤗</span></span>',
-      toolbarOptions: {
-        container: [],
-      },
+      toolbarOptions: {},
+      fontShow: false,
+      layoutShow: false,
+      token: '',
+      timer: [],
+    }
+  },
+  computed: {
+    isPhone: () =>
+      /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent),
+  },
+  created() {
+    // TODO before editor init
+    if (this.isPhone) {
+      const vConsole = new VConsole()
+      this.toolbarOptions = {
+        container: '#toolbar',
+        handlers,
+      }
+      document.addEventListener(
+        'click',
+        (e) => {
+          const cln = e.toElement.className
+          if (
+            cln === 'iconfont icon-ziti' ||
+            cln === 'iconfont icon-cuti' ||
+            cln === 'iconfont icon--xieti' ||
+            cln === 'iconfont icon-biaotizhengwenqiehuan' ||
+            cln === 'iconfont icon-xiahuaxian' ||
+            cln === 'iconfont icon-shanchuxian'
+          ) {
+            this.fontShow = true
+            this.layoutShow = false
+            return false
+          } else if (
+            cln === 'iconfont icon-youxuliebiao' ||
+            cln === 'iconfont icon-wuxuliebiao' ||
+            cln === 'iconfont icon-zuoduiqi' ||
+            cln === 'iconfont icon-youduiqi' ||
+            cln === 'iconfont icon-juzhongduiqi' ||
+            cln === 'iconfont icon-buju'
+          ) {
+            this.layoutShow = true
+            this.fontShow = false
+            return false
+          }
+          this.fontShow = false
+          this.layoutShow = false
+        },
+        false
+      )
     }
   },
   mounted() {
-    console.log(this.$refs.editor.quill)
+    window['setUserToken'] = (token) => {
+      this.token = token
+    }
+    window['setContent'] = (messages) => {
+      this.$refs.editor.quill.clipboard.dangerouslyPasteHTML(messages)
+    }
+    window['getContent'] = () => this.messages
+    this.$nextTick(() => {
+      this.initEditor()
+    })
   },
   methods: {
+    initEditor() {
+      if (!this.$refs.editor) {
+        return
+      }
+      // TODO this.$refs.editor.quill.getModule('toolbar').addHandler
+    },
     insertVedio(url, id) {
       console.log('insertVedio')
       const video = {
@@ -68,6 +185,11 @@ export default {
       })
     },
   },
+  destroyed() {
+    this.timer.forEach((item) => {
+      clearTimeout(item)
+    })
+  },
   watch: {
     messages(newval) {
       function HTMLDecode(text) {
@@ -82,8 +204,9 @@ export default {
       const arr = newval.match(imgReg)
       if (!arr) return
       for (let i = 0; i < arr.length; i++) {
+        clearTimeout(this.timer[i])
         const options = arr[i].match(srcReg)
-        setTimeout(() => {
+        this.timer[i] = setTimeout(() => {
           const op = HTMLDecode(options[1])
           op.container = document.querySelectorAll('#' + op.container)[1]
           const myvideo = new Dplayer(op)
@@ -96,6 +219,7 @@ export default {
 </script>
 
 <style scoped>
+@import '//at.alicdn.com/t/font_1652649_qu42x05j4s.css';
 .editor {
   width: 100%;
   height: px2rem(200);
@@ -103,5 +227,55 @@ export default {
 .ql-toolbar {
   position: fixed;
   bottom: 0;
+}
+#toolbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #f9f9f9;
+  z-index: 99;
+  height: 40px;
+}
+#toolbar button {
+  position: relative;
+  background: transparent;
+  border: 1px solid #f9f9f9;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 18px;
+  padding: 0;
+
+  text-align: center;
+}
+>>> .ql-picker-options {
+  position: fixed !important;
+  top: unset !important;
+  left: 0;
+  width: 100% !important;
+}
+#toolbar button .pop {
+  position: absolute;
+  bottom: -40px;
+  background: #f9f9f9;
+  display: flex;
+  flex-wrap: nowrap;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 9;
+}
+#toolbar button .iconfont {
+  color: #444;
+  padding: 10px;
+}
+#toolbar button::active .iconfont {
+  color: #3fbdf0;
+}
+#toolbar button[disabled] .iconfont {
+  color: #bbb;
+}
+button:active,
+button:focus {
+  outline: none;
 }
 </style>

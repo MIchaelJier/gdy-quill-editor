@@ -6,7 +6,6 @@ import 'gdy-quill-editor/dist/main.css'
 Vue.use(gdyEditor)
 
 Vue.config.productionTip = false
-
 new Vue({
   render: (h) => h(App),
 }).$mount('#app')

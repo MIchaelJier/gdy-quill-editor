@@ -104,6 +104,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isShowTips: {
+      type: Boolean,
+      default: true,
+    },
     disabled: {
       type: Boolean,
       default: false,
@@ -144,9 +148,9 @@ export default {
     // 初始化
     init(flag = true) {
       this.initialize(flag)
-      addQuillTitle()
-      defaultOptions.$el = this.$el
+      this.isShowTips && addQuillTitle()
       defaultOptions.initButton()
+      defaultOptions.$el = this.$el
       delete defaultOptions.$el
       this.addHandlers()
     },
