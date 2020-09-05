@@ -32,6 +32,7 @@ Vue.use(gdyEditor)
 ### Options & Events
 ``` javascript
 @props
+  isShowTips //是否显示tips
   isShowCode //是否显示html代码区
   disabled //编辑器是否能编辑
   options // quill设置

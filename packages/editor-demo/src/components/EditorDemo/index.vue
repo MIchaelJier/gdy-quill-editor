@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    {{ token && `用户token：${token}` }}
     <!-- 自定义toolbar 开始 -->
     <div id="toolbar" v-if="isPhone">
+      <button class="toolbar-done" @click="submit">完成</button>
       <button
         class="ql-font"
         :class="fontShow ? 'active' : ''"
@@ -50,10 +50,10 @@
     <gdy-editor
       class="editor"
       v-model="messages"
+      :isShowTips="!isPhone"
       ref="editor"
       :toolbarOptions="toolbarOptions"
-    >
-    </gdy-editor>
+    ></gdy-editor>
     <button @click="$refs.editor.change('fontType')">fontType</button>
     <button @click="$refs.editor.change('fontColor')">fontColor</button>
     <button @click="$refs.editor.change('fontShape')">fontShape</button>
@@ -78,15 +78,15 @@
     >
       插入视频m3u8
     </button>
-    <button @click="insertLink()">
-      插入link
-    </button>
+    <button @click="insertLink()">插入link</button>
     <div v-html="messages" class="ql-editor other"></div>
   </div>
 </template>
 
 <script>
-import Dplayer from 'dplayer'
+import axios from 'axios'
+import qs from 'qs'
+import { Dplayer } from 'gdy-quill-editor'
 import VConsole from 'vconsole'
 import { handlers } from 'gdy-quill-editor/lib/config/handlers'
 export default {
@@ -99,6 +99,7 @@ export default {
       fontShow: false,
       layoutShow: false,
       token: '',
+      env: 'TEST',
       timer: [],
     }
   },
@@ -109,6 +110,7 @@ export default {
   created() {
     // TODO before editor init
     if (this.isPhone) {
+      // eslint-disable-next-line no-unused-vars
       const vConsole = new VConsole()
       this.toolbarOptions = {
         container: '#toolbar',
@@ -149,8 +151,9 @@ export default {
     }
   },
   mounted() {
-    window['setUserToken'] = (token) => {
+    window['setUserToken'] = (token, env) => {
       this.token = token
+      this.env = env
     }
     window['setContent'] = (messages) => {
       this.$refs.editor.quill.clipboard.dangerouslyPasteHTML(messages)
@@ -161,11 +164,79 @@ export default {
     })
   },
   methods: {
+    androidJsMethod(keyName, param) {
+      try {
+        console.log(
+          `调用了android的 ${keyName} 方法，传递参数为：${JSON.stringify(
+            param
+          )}`
+        )
+        androidJs && androidJs[keyName](param)
+      } catch (error) {}
+    },
+    submit() {
+      this.androidJsMethod('save')
+    },
     initEditor() {
       if (!this.$refs.editor) {
         return
       }
       // TODO this.$refs.editor.quill.getModule('toolbar').addHandler
+      const toolbar = this.$refs.editor.quill.getModule('toolbar')
+      const quill = this.$refs.editor.quill
+      toolbar.addHandler('image', (value) => {
+        let fileInput = document.querySelector('input.ql-image[type=file]')
+        if (fileInput == null) {
+          fileInput = document.createElement('input')
+          fileInput.setAttribute('type', 'file')
+          fileInput.setAttribute(
+            'accept',
+            'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
+          )
+
+          fileInput.addEventListener('change', () => {
+            if (fileInput.files != null && fileInput.files[0] != null) {
+              const formData = new FormData()
+              formData.append('file', fileInput.files[0])
+              fileInput.classList.add('ql-image')
+              const reader = new FileReader()
+              reader.readAsDataURL(fileInput.files[0])
+              reader.onload = () => {
+                const imgFile = reader.result
+                axios
+                  .post(
+                    '//consoleapi.guangdianyun.tv/v1' +
+                      '/cms/article/uploadImg',
+                    qs.stringify({
+                      img: imgFile,
+                    }),
+                    {
+                      headers: {
+                        'X-Ca-Stage': this.env,
+                        token: this.token,
+                      },
+                    }
+                  )
+                  .then(
+                    (res) => {
+                      if (res.data.code === 200 && res.data.errorCode === 0) {
+                        const range = quill.getSelection(true)
+                        quill.insertEmbed(range.index, 'image', res.data.data)
+                        quill.setSelection(range.index + 1)
+                      } else {
+                        this.androidJsMethod('showToast', res.errorMessage)
+                      }
+                    },
+                    (response) => {
+                      this.androidJsMethod('showToast', '请求失败')
+                    }
+                  )
+              }
+            }
+          })
+        }
+        fileInput.click()
+      })
     },
     insertVedio(url, id) {
       console.log('insertVedio')
@@ -219,23 +290,27 @@ export default {
 </script>
 
 <style scoped>
-@import '//at.alicdn.com/t/font_1652649_qu42x05j4s.css';
+@import '../../style/iconfont.css';
+
 .editor {
   width: 100%;
   height: px2rem(200);
 }
+
 .ql-toolbar {
   position: fixed;
   bottom: 0;
 }
+
 #toolbar {
   position: fixed;
-  top: 0;
+  bottom: 0;
   width: 100%;
   background: #f9f9f9;
   z-index: 99;
   height: 40px;
 }
+
 #toolbar button {
   position: relative;
   background: transparent;
@@ -247,15 +322,23 @@ export default {
 
   text-align: center;
 }
+
+#toolbar .toolbar-done {
+  float: right;
+  font-size: 12px;
+}
+
 >>> .ql-picker-options {
   position: fixed !important;
   top: unset !important;
   left: 0;
   width: 100% !important;
+  margin-top: -80px !important;
 }
+
 #toolbar button .pop {
   position: absolute;
-  bottom: -40px;
+  top: -40px;
   background: #f9f9f9;
   display: flex;
   flex-wrap: nowrap;
@@ -264,16 +347,20 @@ export default {
   overflow: hidden;
   z-index: 9;
 }
+
 #toolbar button .iconfont {
   color: #444;
   padding: 10px;
 }
+
 #toolbar button::active .iconfont {
   color: #3fbdf0;
 }
+
 #toolbar button[disabled] .iconfont {
   color: #bbb;
 }
+
 button:active,
 button:focus {
   outline: none;

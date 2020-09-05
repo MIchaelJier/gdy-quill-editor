@@ -5,7 +5,8 @@
     "servedemo": "cd ./packages/editor-demo && vue-cli-service serve",
     "builddemo": "cd ./packages/editor-demo && vue-cli-service build",
     "lintdemo": "cd ./packages/editor-demo && vue-cli-service lint",
-    "webpackGQE" : "cd ./packages/gdy-quill-editor && webpack"
+    "webpackGQE" : "cd ./packages/gdy-quill-editor && webpack",
+    "webpackDemo" : "cd ./packages/editor-demo && vue-cli-service build"
   },
   "dependencies": {
     "core-js": "^3.6.5",

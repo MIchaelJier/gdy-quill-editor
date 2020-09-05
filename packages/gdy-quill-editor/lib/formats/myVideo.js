@@ -30,11 +30,13 @@ class myVideo extends BlockEmbed {
     node.setAttribute('data-options', JSON.stringify(videoOptions))
     node.setAttribute(
       'style',
-      `width:${value.width || '100'}px;height:${
-        value.height || '50'
-      }px;background-repeat:no-repeat;background-size:100% 100%;background-image:url('${
-        value.poster
-      }/${value.width}/${value.height}')`
+      `
+        width:${value.width || '100'}px;
+        height:${value.height || '50'}px;
+        background-repeat:no-repeat;
+        background-size:100% 100%;
+        background-image:url('${value.poster}/${value.width}/${value.height}')
+      `
     )
     node.setAttribute('src', src)
     // setTimeout(() => {
