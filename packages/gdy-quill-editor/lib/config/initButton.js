@@ -29,7 +29,6 @@ function initButton() {
     { title: 'ql-history-back', inner: historyBack },
     { title: 'ql-history-redo', inner: historyRedo },
     { title: 'ql-grammarly-inline', inner: grammarlyInline },
-    { title: 'ql-grammarly-inline', inner: grammarlyInline },
     { title: 'ql-dangerously-paste', inner: paste },
   ]
   querySelectorArr.forEach((item) => {

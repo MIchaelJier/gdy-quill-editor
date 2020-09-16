@@ -1,7 +1,12 @@
 <template>
-  <div class="hello">
+  <div class="demo">
     <!-- 自定义toolbar 开始 -->
-    <div id="toolbar" v-if="isPhone">
+    <div
+      id="toolbar"
+      :class="isPhone ? 'phonetoolbar' : ''"
+      v-if="isPhone"
+      v-show="showtoolbar"
+    >
       <button class="toolbar-done" @click="submit">完成</button>
       <button
         class="ql-font"
@@ -49,12 +54,13 @@
     <!-- 自定义toolbar 结束 -->
     <gdy-editor
       class="editor"
+      :style="{ height: isPhone ? `1200px` : `100%` }"
       v-model="messages"
       :isShowTips="!isPhone"
       ref="editor"
       :toolbarOptions="toolbarOptions"
     ></gdy-editor>
-    <button @click="$refs.editor.change('fontType')">fontType</button>
+    <!-- <button @click="$refs.editor.change('fontType')">fontType</button>
     <button @click="$refs.editor.change('fontColor')">fontColor</button>
     <button @click="$refs.editor.change('fontShape')">fontShape</button>
     <button @click="$refs.editor.change('other')">other</button>
@@ -78,8 +84,8 @@
     >
       插入视频m3u8
     </button>
-    <button @click="insertLink()">插入link</button>
-    <div v-html="messages" class="ql-editor other"></div>
+    <button @click="insertLink()">插入link</button> -->
+    <!-- <div v-html="messages" class="ql-editor other"></div> -->
   </div>
 </template>
 
@@ -93,14 +99,14 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      messages:
-        '<p><img src="https://static-pro.guangdianyun.tv/1000/cms/20200724/557d09308f3be73222d6d2aad9550e24.png" height="96" width="96" data-align="center" style="display: block; margin: auto;"></p><p class="ql-align-center"><span style="background-color: rgb(230, 0, 0);">test</span></p><span contenteditable="false"><span class="ap ap-hugging_face">🤗</span></span>',
+      messages: '',
       toolbarOptions: {},
       fontShow: false,
       layoutShow: false,
       token: '',
       env: 'TEST',
       timer: [],
+      showtoolbar: true,
     }
   },
   computed: {
@@ -110,8 +116,7 @@ export default {
   created() {
     // TODO before editor init
     if (this.isPhone) {
-      // eslint-disable-next-line no-unused-vars
-      const vConsole = new VConsole()
+      this.isPhone && this.env === 'TEST' && new VConsole()
       this.toolbarOptions = {
         container: '#toolbar',
         handlers,
@@ -158,6 +163,10 @@ export default {
     window['setContent'] = (messages) => {
       this.$refs.editor.quill.clipboard.dangerouslyPasteHTML(messages)
     }
+    window['showToolbar'] = (flag) => {
+      this.showtoolbar = flag
+    }
+    window['unescape'] = (text) => unescape(text)
     window['getContent'] = () => this.messages
     this.$nextTick(() => {
       this.initEditor()
@@ -224,7 +233,7 @@ export default {
                         quill.insertEmbed(range.index, 'image', res.data.data)
                         quill.setSelection(range.index + 1)
                       } else {
-                        this.androidJsMethod('showToast', res.errorMessage)
+                        this.androidJsMethod('showToast', '图片上传失败,请重试')
                       }
                     },
                     (response) => {
@@ -262,6 +271,7 @@ export default {
     })
   },
   watch: {
+    /* 视频预览 */
     messages(newval) {
       function HTMLDecode(text) {
         let temp = document.createElement('div')
@@ -291,18 +301,20 @@ export default {
 
 <style scoped>
 @import '../../style/iconfont.css';
-
+.demo,
 .editor {
   width: 100%;
-  height: px2rem(200);
+  height: 100%;
+  padding-bottom: 20px;
 }
-
 .ql-toolbar {
   position: fixed;
   bottom: 0;
 }
-
-#toolbar {
+.ql-container.ql-snow {
+  border: none;
+}
+.phonetoolbar {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -311,7 +323,7 @@ export default {
   height: 40px;
 }
 
-#toolbar button {
+.phonetoolbar button {
   position: relative;
   background: transparent;
   border: 1px solid #f9f9f9;
@@ -323,12 +335,13 @@ export default {
   text-align: center;
 }
 
-#toolbar .toolbar-done {
+.phonetoolbar .toolbar-done {
   float: right;
   font-size: 12px;
+  width: auto;
 }
 
->>> .ql-picker-options {
+>>> .phonetoolbar .ql-picker-options {
   position: fixed !important;
   top: unset !important;
   left: 0;
@@ -336,7 +349,7 @@ export default {
   margin-top: -80px !important;
 }
 
-#toolbar button .pop {
+.phonetoolbar button .pop {
   position: absolute;
   top: -40px;
   background: #f9f9f9;
@@ -348,16 +361,16 @@ export default {
   z-index: 9;
 }
 
-#toolbar button .iconfont {
+.phonetoolbar button .iconfont {
   color: #444;
-  padding: 10px;
+  /* padding: 10px; */
 }
 
-#toolbar button::active .iconfont {
+.phonetoolbar button::active .iconfont {
   color: #3fbdf0;
 }
 
-#toolbar button[disabled] .iconfont {
+.phonetoolbar button[disabled] .iconfont {
   color: #bbb;
 }
 

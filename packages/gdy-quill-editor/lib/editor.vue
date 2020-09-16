@@ -149,8 +149,8 @@ export default {
     init(flag = true) {
       this.initialize(flag)
       this.isShowTips && addQuillTitle()
-      defaultOptions.initButton()
       defaultOptions.$el = this.$el
+      defaultOptions.initButton()
       delete defaultOptions.$el
       this.addHandlers()
     },
