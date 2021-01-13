@@ -2,11 +2,10 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "servedemo": "cd ./packages/editor-demo && vue-cli-service serve",
-    "builddemo": "cd ./packages/editor-demo && vue-cli-service build",
-    "lintdemo": "cd ./packages/editor-demo && vue-cli-service lint",
-    "webpackGQE" : "cd ./packages/gdy-quill-editor && webpack",
-    "webpackDemo" : "cd ./packages/editor-demo && vue-cli-service build"
+    "serve:demo": "cd ./packages/editor-demo && vue-cli-service serve",
+    "lint:demo": "cd ./packages/editor-demo && vue-cli-service lint",
+    "build:quill" : "cd ./packages/gdy-quill-editor && webpack",
+    "build:demo" : "cd ./packages/editor-demo && vue-cli-service build"
   },
   "dependencies": {
     "core-js": "^3.6.5",

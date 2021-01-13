@@ -59,7 +59,8 @@
       :isShowTips="!isPhone"
       ref="editor"
       :toolbarOptions="toolbarOptions"
-    ></gdy-editor>
+      @imgHandle="imgHandle"
+    />
     <!-- <button @click="$refs.editor.change('fontType')">fontType</button>
     <button @click="$refs.editor.change('fontColor')">fontColor</button>
     <button @click="$refs.editor.change('fontShape')">fontShape</button>
@@ -90,9 +91,12 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-duplicate-imports
+import { Dplayer, gdyEditor } from 'gdy-quill-editor'
+import 'gdy-quill-editor/dist/main.css'
 import axios from 'axios'
 import qs from 'qs'
-import { Dplayer } from 'gdy-quill-editor'
+// eslint-disable-next-line no-duplicate-imports
 import VConsole from 'vconsole'
 import { handlers } from 'gdy-quill-editor/lib/config/handlers'
 export default {
@@ -108,6 +112,9 @@ export default {
       timer: [],
       showtoolbar: true,
     }
+  },
+  components: {
+    gdyEditor,
   },
   computed: {
     isPhone: () =>
@@ -180,11 +187,45 @@ export default {
             param
           )}`
         )
+        // eslint-disable-next-line no-undef
         androidJs && androidJs[keyName](param)
       } catch (error) {}
     },
     submit() {
       this.androidJsMethod('save')
+    },
+    imgHandle(param) {
+      axios
+        .post(
+          '//consoleapi.guangdianyun.tv/v1/cms/article/uploadImg',
+          qs.stringify({
+            img: param.base64,
+          }),
+          {
+            headers: {
+              'X-Ca-Stage': this.env,
+              token: this.token,
+            },
+          }
+        )
+        .then(
+          (res) => {
+            if (res.data.code === 200 && res.data.errorCode === 0) {
+              param.insert(res.data.data)
+            } else {
+              param.insert(
+                'https://himg.bdimg.com/sys/portraitn/item/bad3313132303735313937660b'
+              )
+              this.androidJsMethod('showToast', '图片上传失败,请重试')
+            }
+          },
+          (response) => {
+            param.insert(
+              'https://himg.bdimg.com/sys/portraitn/item/bad3313132303735313937660b'
+            )
+            this.androidJsMethod('showToast', '请求失败')
+          }
+        )
     },
     initEditor() {
       if (!this.$refs.editor) {
@@ -193,59 +234,6 @@ export default {
       // TODO this.$refs.editor.quill.getModule('toolbar').addHandler
       const toolbar = this.$refs.editor.quill.getModule('toolbar')
       const quill = this.$refs.editor.quill
-      toolbar.addHandler('image', (value) => {
-        let fileInput = document.querySelector('input.ql-image[type=file]')
-        if (fileInput == null) {
-          fileInput = document.createElement('input')
-          fileInput.setAttribute('type', 'file')
-          fileInput.setAttribute(
-            'accept',
-            'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
-          )
-
-          fileInput.addEventListener('change', () => {
-            if (fileInput.files != null && fileInput.files[0] != null) {
-              const formData = new FormData()
-              formData.append('file', fileInput.files[0])
-              fileInput.classList.add('ql-image')
-              const reader = new FileReader()
-              reader.readAsDataURL(fileInput.files[0])
-              reader.onload = () => {
-                const imgFile = reader.result
-                axios
-                  .post(
-                    '//consoleapi.guangdianyun.tv/v1' +
-                      '/cms/article/uploadImg',
-                    qs.stringify({
-                      img: imgFile,
-                    }),
-                    {
-                      headers: {
-                        'X-Ca-Stage': this.env,
-                        token: this.token,
-                      },
-                    }
-                  )
-                  .then(
-                    (res) => {
-                      if (res.data.code === 200 && res.data.errorCode === 0) {
-                        const range = quill.getSelection(true)
-                        quill.insertEmbed(range.index, 'image', res.data.data)
-                        quill.setSelection(range.index + 1)
-                      } else {
-                        this.androidJsMethod('showToast', '图片上传失败,请重试')
-                      }
-                    },
-                    (response) => {
-                      this.androidJsMethod('showToast', '请求失败')
-                    }
-                  )
-              }
-            }
-          })
-        }
-        fileInput.click()
-      })
     },
     insertVedio(url, id) {
       console.log('insertVedio')

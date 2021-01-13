@@ -1,5 +1,5 @@
-# gdy-quill-editor 
-基于Quill的vue编辑器组件
+# gdy-quill-editor
+基于Quill的vue编辑器组件 npm@0.1.0
 ``` javascript
 "quill": "2.0.0-dev.3"
 // 文档： https://quilljs.com/
@@ -11,24 +11,33 @@
 // yarn
 lerna bootstrap
 // if you want run demo
-yarn servedemo
+yarn serve:demo
 ```
 
+### Screenshot
+![avatar](/screenshot/Snipaste_2020-08-02_13-21-52.png)  
+
 ### Download
-[github](https://github.com/MIchaelJier/yunEditor)
 ``` javascript
 npm install gdy-quill-editor  
 // or
 yarn add gdy-quill-editor 
 ```
 ``` javascript
+// gdyEditor = { Quill, gdyEditor, install, Dplayer }
 // VUE Global registration
 import Vue from 'vue'
-import gdyEditor from 'gdy-quill-editor'
-// Alt.: import { Quill, yunEditor, install, Dplayer } from 'gdy-quill-editor'
 import 'gdy-quill-editor/dist/main.css'
+import gdyEditor from 'gdy-quill-editor'
 Vue.use(gdyEditor)
+// VUE Components 
+import { gdyEditor } from 'gdy-quill-editor'
+import 'gdy-quill-editor/dist/main.css'
+components: {
+  gdyEditor,
+},
 ```
+
 ### Options & Events
 * 目录
 ``` javascript
@@ -46,20 +55,10 @@ Vue.use(gdyEditor)
   change
   ready
 @inner methods
-  addVideoLink // 添加一个自定义视频
-  // {
-  //   url, 
-  //   id,
-  //   poster,
-  //   height，
-  //   width
-  // } 
-  addTextLink // 添加一个自定义超链接
-  // {
-  //  innerText,
-  //  dataValue:,
-  //  href,
-  // }
+  imgHandle({ base64: String /* 图片的base64对象 */, imgFile: File /* 图片的File对象 */, insert: Function /* 上传成功调用插入方法 */}) // 图片上传方法
+  addVideoLink({ url: String /* 视频url */, id: String /* 视频唯一id */, poster: String /* 视频封面 */, height: String /* 视频height 默认50 单位px*/, width: String /* 视频width 默认100 单位px*/}) // 添加一个自定义视频
+  // { url, id, poster, height，width } 
+  addTextLink({ innerText: String  /* 插入的文字*/, dataValue: String /* 插入的文字*/, href: String /* 链接 */ }) // 添加一个自定义超链接
 ```
 * globalOptions
 ``` javascript
@@ -77,7 +76,7 @@ toolbarOptions = {
   handlers,
 }
 ```
-```json
+```javascript
 // 你可以挑选 
 const titleConfig = {
   'ql-bold': '加粗',
@@ -113,10 +112,10 @@ const titleConfig = {
   'ql-history-back': '返回',
   'ql-history-redo': '撤销返回',
   'ql-emoji': '表情',
-  'ql-dangerously-paste': '完全复制',
+  'ql-dangerously-paste': '完全复制', // 禁用quill所有的黏贴过滤规则
 }
 ```
-* video
+* video 
   video在编辑视频并不会播放，会以封面图的图片展示  
   你需要在预览中初始化视频的播放：
 ```javascript
@@ -128,6 +127,25 @@ op.container = document.querySelectorAll('#' + op.container)[1]
 const myvideo = new Dplayer(op)
 myvideo.play()
 ```
+* 上传图片
+```javascript
+// <gdy-editor @imgHandle="imgHandle"/>
+// ...
+imgHandle(param) {
+  // 这里使用axios举个🌰
+  axios.post(url: 'http://xxx.xxx.xxx',qs.stringify({img: param.base64,})).then(
+     () => { 
+       /* 200 */ param.insert()
+       /* else */ param.insert(param.base64)
+     },
+     // failed
+     () => {
+       param.insert(base64)
+     }
+   )
+  },
+```
+
 * 其他
   initEditor中自定义图标和方法
 ```javascript

@@ -1,17 +1,6 @@
 <template>
   <div class="quill-editor">
     <slot name="toolbar"></slot>
-    <!-- slot example -->
-    <!-- <div id="toolbar">
-      <select class="ql-size">
-        <option value="small">small</option>
-        <option value="large">large</option>
-        <option value="huge">huge</option>
-      </select>
-      <button class="ql-bold">bold</button>
-      <button class="ql-script" value="sub">sub</button>
-      <button class="ql-script" value="super">super</button>
-    </div>-->
     <div ref="editor"></div>
     <div class="preview" style="color: #666;" v-if="isShowCode">
       {{ value === '' ? 'preview' : value }}
@@ -208,34 +197,168 @@ export default {
     // 增加 toolbar事件
     addHandlers() {
       const bar = this.quill.getModule('toolbar')
-      bar.addHandler('dangerously-paste', () => {
-        this.$refs.editor.removeEventListener(
+      this.quill.root.addEventListener(
+        'paste',
+        this.pasteHandle.bind(this),
+        true
+      )
+      this.quill.root.addEventListener(
+        'drop',
+        this.dropHandle.bind(this),
+        false
+      )
+      this.quill.root.addEventListener(
+        'dragover',
+        function (e) {
+          e.dataTransfer.dropEffect = 'copy' // 兼容某些三方应用，如圈点
+          e.preventDefault()
+          e.stopPropagation()
+        },
+        false
+      )
+      bar.addHandler('dangerously-paste', this.dangerouslyPasteHandle)
+      bar.addHandler('image', this.imageHandle)
+    },
+    // 限制quill黏贴事件过滤规则（放到最后
+    dangerouslyPasteHandle() {
+      const bar = this.quill.getModule('toolbar')
+      this.quill.root.removeEventListener(
+        'paste',
+        bar.handlers.selectionPaste,
+        true
+      )
+      // 禁用 quill 剪切板功能
+      if (this.quill.clipboard.matchers.length > 14) {
+        changePaste.call(this, false)
+        this.quill.clipboard.matchers.length = 14
+      } else {
+        changePaste.call(this, true)
+        this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
+          delta.ops = delta.ops.map((op) => {
+            return {
+              insert: '',
+            }
+          })
+          return delta
+        })
+        // 监听浏览器 黏贴事件
+        this.quill.root.addEventListener(
           'paste',
           bar.handlers.selectionPaste,
           true
         )
-        // 禁用 quill 剪切板功能
-        if (this.quill.clipboard.matchers.length > 14) {
-          changePaste.call(this, false)
-          this.quill.clipboard.matchers.length = 14
-        } else {
-          changePaste.call(this, true)
-          this.quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
-            delta.ops = delta.ops.map((op) => {
-              return {
-                insert: '',
-              }
-            })
-            return delta
+      }
+    },
+    file2Base64(file, next) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        next(reader.result)
+      }
+    },
+    insertImage(file, next) {
+      this.file2Base64(file, (base64) => {
+        const insert = (url) => {
+          this.quill.blur()
+          // 获取光标当前位置
+          const index =
+            (this.quill.getSelection(true) || {}).index ||
+            this.quill.getLength() - 1
+          this.quill.insertEmbed(index, 'image', url)
+          this.quill.update()
+          this.quill.setSelection(index + 1)
+          next && next()
+        }
+        if (this.$listeners['imgHandle']) {
+          this.$emit('imgHandle', {
+            base64,
+            imgFile: file,
+            insert,
           })
-          // 监听浏览器 黏贴事件
-          this.$refs.editor.addEventListener(
-            'paste',
-            bar.handlers.selectionPaste,
-            true
-          )
+        } else {
+          insert(base64)
         }
       })
+    },
+    imageHandle() {
+      let fileInput = document.querySelector('input.ql-image[type=file]')
+      if (fileInput == null) {
+        fileInput = document.createElement('input')
+        fileInput.setAttribute('type', 'file')
+        fileInput.setAttribute(
+          'accept',
+          'image/png, image/gif, image/jpeg, image/bmp, image/x-icon'
+        )
+        fileInput.addEventListener('change', () => {
+          if (fileInput.files != null && fileInput.files[0] != null) {
+            const formData = new FormData()
+            formData.append('file', fileInput.files[0])
+            fileInput.classList.add('ql-image')
+            this.insertImage(fileInput.files[0])
+          }
+        })
+      }
+      fileInput.click()
+    },
+    pasteHandle(e) {
+      let datas
+      // 判断IE浏览器
+      if (!!window.ActiveXObject || 'ActiveXObject' in window) {
+        datas = window.clipboardData.files
+      } else {
+        const cli = e.clipboardData || e.originalEvent.clipboardData
+        datas = cli.items
+      }
+
+      Object.keys(datas).forEach((index) => {
+        const item = datas[index]
+        // ie
+        if (!!window.ActiveXObject || 'ActiveXObject' in window) {
+          if (item.type.indexOf('image/') > -1) {
+            e.preventDefault()
+            if (item.getAsFile) {
+              this.insertImage(item.getAsFile())
+            }
+          }
+          return
+        }
+        if (item.kind === 'file') {
+          e.preventDefault()
+          if (item.getAsFile) {
+            this.insertImage(item.getAsFile())
+          }
+        }
+      })
+    },
+    dropHandle(event) {
+      event.preventDefault()
+      event.stopPropagation()
+      this.quill.enable(false) // Set ability for user to edit, via input devices like the mouse or keyboard.
+      const df = event.dataTransfer
+      const insertImage = (file) =>
+        this.insertImage(file, () => {
+          // deleteText 也可以
+          this.quill.enable()
+          this.quill.history.undo()
+        })
+      // eslint-disable-next-line no-undefined
+      if (df.items !== undefined) {
+        // Chrome
+        for (let i = 0; i < df.items.length; i++) {
+          const item = df.items[i]
+          if (item.kind === 'file' && item.webkitGetAsEntry().isFile) {
+            insertImage(item.getAsFile())
+          }
+        }
+      } else {
+        // 非Chrome拖拽文件逻辑
+        for (let i = 0; i < df.files.length; i++) {
+          const dropFile = df.files[i]
+          if (dropFile.type) {
+            insertImage(dropFile)
+          }
+        }
+      }
     },
     // 插入自定义视频
     addVideoLink(videoLink) {
@@ -249,12 +372,6 @@ export default {
       this.quill.insertEmbed(index, 'my-video', videoLink)
     },
     // 插入自定义link
-    // link :
-    // {
-    //  innerText: xxxxx,
-    //  dataValue: xxxxx,
-    //  href: xxxxx,
-    // }
     addTextLink(link) {
       const range = this.quill.getSelection()
       let index = 0
@@ -297,8 +414,6 @@ export default {
 </script>
 
 <style scoped>
-.quill-editor {
-}
 .preview {
   border: 1px solid #ccc;
   border-top: none;
