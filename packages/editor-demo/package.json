@@ -10,7 +10,6 @@
   "dependencies": {
     "axios": "^0.20.0",
     "gdy-quill-editor": "^0.1.0",
-    "hls.js": "^0.14.1",
     "qs": "^6.9.4",
     "vconsole": "^3.3.4"
   },

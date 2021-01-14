@@ -9,6 +9,8 @@
     "quill",
     "vue",
     "editor",
+    "vue-editor",
+    "vue-quill-editor",
     "gdy"
   ],
   "dependencies": {

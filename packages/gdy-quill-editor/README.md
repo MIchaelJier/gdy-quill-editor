@@ -15,7 +15,7 @@ yarn serve:demo
 ```
 
 ### Screenshot
-![avatar](/screenshot/Snipaste_2020-08-02_13-21-52.png)  
+![avatar](../../screenshot/Snipaste_2020-08-02_13-21-52.png)  
 
 ### Download
 ``` javascript

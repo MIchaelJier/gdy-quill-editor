@@ -92,7 +92,7 @@
 
 <script>
 // eslint-disable-next-line no-duplicate-imports
-import { Dplayer, gdyEditor } from 'gdy-quill-editor'
+import { Dplayer } from 'gdy-quill-editor'
 import 'gdy-quill-editor/dist/main.css'
 import axios from 'axios'
 import qs from 'qs'
@@ -113,9 +113,9 @@ export default {
       showtoolbar: true,
     }
   },
-  components: {
-    gdyEditor,
-  },
+  // components: {
+  //   gdyEditor,
+  // },
   computed: {
     isPhone: () =>
       /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent),

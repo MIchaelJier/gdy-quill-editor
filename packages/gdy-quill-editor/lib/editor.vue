@@ -2,7 +2,7 @@
   <div class="quill-editor">
     <slot name="toolbar"></slot>
     <div ref="editor"></div>
-    <div class="preview" style="color: #666;" v-if="isShowCode">
+    <div class="preview" v-if="isShowCode">
       {{ value === '' ? 'preview' : value }}
     </div>
   </div>
@@ -337,9 +337,10 @@ export default {
       const df = event.dataTransfer
       const insertImage = (file) =>
         this.insertImage(file, () => {
-          // deleteText 也可以
+          // this.quill.once('text-change', () => {
+          //   this.quill.history.undo()
+          // })
           this.quill.enable()
-          this.quill.history.undo()
         })
       // eslint-disable-next-line no-undefined
       if (df.items !== undefined) {
@@ -351,7 +352,7 @@ export default {
           }
         }
       } else {
-        // 非Chrome拖拽文件逻辑
+        // 非Chrome
         for (let i = 0; i < df.files.length; i++) {
           const dropFile = df.files[i]
           if (dropFile.type) {
@@ -415,6 +416,7 @@ export default {
 
 <style scoped>
 .preview {
+  color: #666;
   border: 1px solid #ccc;
   border-top: none;
   min-height: 100px;
