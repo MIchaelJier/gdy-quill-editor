@@ -6,6 +6,7 @@
       :class="isPhone ? 'phonetoolbar' : ''"
       v-if="isPhone"
       v-show="showtoolbar"
+      @click="hiddenKeyboard"
     >
       <button class="toolbar-done" @click="submit">完成</button>
       <button
@@ -43,7 +44,7 @@
           <button class="ql-align" value="center"></button>
         </div>
       </button>
-      <button class="ql-image"></button>
+      <button class="ql-image" @click="chooseImage"></button>
       <button class="ql-history-back">
         <i class="iconfont icon-7chexiao"></i>
       </button>
@@ -119,6 +120,10 @@ export default {
   computed: {
     isPhone: () =>
       /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent),
+    isIOS: () => !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+    isAndroid: () =>
+      navigator.userAgent.indexOf('Android') > -1 ||
+      navigator.userAgent.indexOf('Linux') > -1,
   },
   created() {
     // TODO before editor init
@@ -178,21 +183,51 @@ export default {
     this.$nextTick(() => {
       this.initEditor()
     })
+    window['insertImage'] = (url) => this.insertImage(url)
   },
   methods: {
-    androidJsMethod(keyName, param) {
+    webviewJsMethod(keyName, param) {
       try {
+        let phoneType = ''
+        if (this.isAndroid) {
+          phoneType = 'android'
+          // eslint-disable-next-line no-undef
+          androidJs && androidJs[keyName](param)
+        }
+        if (this.isIOS) {
+          phoneType = 'ios'
+          window.webkit &&
+            window.webkit.messageHandlers[keyName].postMessage(param)
+        }
         console.log(
-          `调用了android的 ${keyName} 方法，传递参数为：${JSON.stringify(
+          `调用了${phoneType}的 ${keyName} 方法，传递参数为：${JSON.stringify(
             param
           )}`
         )
-        // eslint-disable-next-line no-undef
-        androidJs && androidJs[keyName](param)
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    hiddenKeyboard() {
+      if (this.isIOS) {
+        this.webviewJsMethod('hiddenKeyboard')
+      }
     },
     submit() {
-      this.androidJsMethod('save')
+      this.webviewJsMethod('save')
+    },
+    chooseImage() {
+      this.webviewJsMethod('upDataImg')
+    },
+    insertImage(url) {
+      const quill = this.$refs.editor.quill
+      quill.blur()
+      // 获取光标当前位置
+      const index =
+        (quill.getSelection(true) || {}).index || quill.getLength() - 1
+      quill.insertEmbed(index, 'image', url)
+      quill.update()
+      quill.setSelection(index + 1)
     },
     imgHandle(param) {
       axios
@@ -213,17 +248,13 @@ export default {
             if (res.data.code === 200 && res.data.errorCode === 0) {
               param.insert(res.data.data)
             } else {
-              param.insert(
-                'https://himg.bdimg.com/sys/portraitn/item/bad3313132303735313937660b'
-              )
-              this.androidJsMethod('showToast', '图片上传失败,请重试')
+              param.insert(param.base64)
+              this.webviewJsMethod('showToast', '图片上传失败,请重试')
             }
           },
           (response) => {
-            param.insert(
-              'https://himg.bdimg.com/sys/portraitn/item/bad3313132303735313937660b'
-            )
-            this.androidJsMethod('showToast', '请求失败')
+            param.insert(param.base64)
+            this.webviewJsMethod('showToast', '请求失败')
           }
         )
     },
@@ -232,8 +263,11 @@ export default {
         return
       }
       // TODO this.$refs.editor.quill.getModule('toolbar').addHandler
-      const toolbar = this.$refs.editor.quill.getModule('toolbar')
       const quill = this.$refs.editor.quill
+      const toolbar = quill.getModule('toolbar')
+      if (this.isIOS) {
+        toolbar.addHandler('image', () => {})
+      }
     },
     insertVedio(url, id) {
       console.log('insertVedio')

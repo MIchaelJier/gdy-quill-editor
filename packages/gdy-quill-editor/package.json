@@ -1,6 +1,6 @@
 {
   "name": "gdy-quill-editor",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "./dist/gdy-editor",
   "author": "Michael",
   "email": "chem908430737@icloud.com",
@@ -17,7 +17,7 @@
     "dplayer": "^1.26.0",
     "fuse.js": "^6.4.0",
     "hls.js": "^0.14.1",
-    "quill": "2.0.0-dev.3",
+    "quill": "2.0.0-dev.4",
     "quill-blot-formatter": "^1.0.5",
     "vconsole": "^3.3.4"
   },

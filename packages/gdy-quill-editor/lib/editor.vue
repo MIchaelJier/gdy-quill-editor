@@ -425,4 +425,7 @@ export default {
   font-style: italic;
   word-break: break-all;
 }
+>>> .ql-editor li > .ql-ui:before {
+  width: 1.21em;
+}
 </style>
