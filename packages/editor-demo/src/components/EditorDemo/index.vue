@@ -61,6 +61,7 @@
       ref="editor"
       :toolbarOptions="toolbarOptions"
       @imgHandle="imgHandle"
+      @change="change"
     />
     <!-- <button @click="$refs.editor.change('fontType')">fontType</button>
     <button @click="$refs.editor.change('fontColor')">fontColor</button>
@@ -112,6 +113,7 @@ export default {
       env: 'TEST',
       timer: [],
       showtoolbar: true,
+      vconsole: null,
     }
   },
   // components: {
@@ -128,7 +130,7 @@ export default {
   created() {
     // TODO before editor init
     if (this.isPhone) {
-      this.isPhone && this.env === 'TEST' && new VConsole()
+      this.isPhone && (this.vconsole = new VConsole())
       this.toolbarOptions = {
         container: '#toolbar',
         handlers,
@@ -168,31 +170,57 @@ export default {
     }
   },
   mounted() {
+    // Object.defineProperty()
     window['setUserToken'] = (token, env) => {
+      this.webMethod('setUserToken')
       this.token = token
       this.env = env
+      if (env !== 'TEST') {
+        this.vconsole.$dom.style.display = 'none'
+      } else {
+        this.vconsole.$dom.style.display = 'block'
+      }
     }
     window['setContent'] = (messages) => {
+      this.webMethod('setContent')
       this.$refs.editor.quill.clipboard.dangerouslyPasteHTML(messages)
     }
     window['showToolbar'] = (flag) => {
+      this.webMethod('showToolbar')
       this.showtoolbar = flag
     }
-    window['unescape'] = (text) => unescape(text)
-    window['getContent'] = () => this.messages
+    window['unescape'] = (text) => {
+      this.webMethod('unescape')
+      return unescape(text)
+    }
+    window['getContent'] = () => {
+      this.webMethod('getContent')
+      return this.messages
+    }
     this.$nextTick(() => {
       this.initEditor()
     })
-    window['insertImage'] = (url) => this.insertImage(url)
+    window['insertImage'] = (url) => {
+      this.webMethod('insertImage')
+      return this.insertImage(url)
+    }
   },
   methods: {
+    change() {
+      console.log(1)
+    },
+    webMethod(name) {
+      console.log(`调用了web端的${name}方法`)
+    },
     webviewJsMethod(keyName, param) {
       try {
         let phoneType = ''
         if (this.isAndroid) {
           phoneType = 'android'
           // eslint-disable-next-line no-undef
-          androidJs && androidJs[keyName](param)
+          androidJs &&
+            // eslint-disable-next-line no-undef
+            (param ? androidJs[keyName](param) : androidJs[keyName]())
         }
         if (this.isIOS) {
           phoneType = 'ios'
@@ -230,15 +258,17 @@ export default {
       quill.setSelection(index + 1)
     },
     imgHandle(param) {
+      const { base64, imgFile, insert } = param
+      const fd = new FormData()
+      fd.append('file', imgFile)
       axios
         .post(
-          '//consoleapi.guangdianyun.tv/v1/cms/article/uploadImg',
-          qs.stringify({
-            img: param.base64,
-          }),
+          'https://consoleapi.guangdianyun.tv/v1/cms/article/uploadImg',
+          fd,
           {
             headers: {
-              'X-Ca-Stage': this.env,
+              'Content-Type': 'multipart/form-data',
+              // 'X-Ca-Stage': this.env,
               token: this.token,
             },
           }
@@ -246,14 +276,14 @@ export default {
         .then(
           (res) => {
             if (res.data.code === 200 && res.data.errorCode === 0) {
-              param.insert(res.data.data)
+              insert(res.data.data)
             } else {
-              param.insert(param.base64)
+              insert(param.base64)
               this.webviewJsMethod('showToast', '图片上传失败,请重试')
             }
           },
           (response) => {
-            param.insert(param.base64)
+            insert(param.base64)
             this.webviewJsMethod('showToast', '请求失败')
           }
         )
@@ -333,7 +363,7 @@ export default {
   position: fixed;
   bottom: 0;
 }
-.ql-container.ql-snow {
+>>> .ql-container.ql-snow {
   border: none;
 }
 .phonetoolbar {

@@ -4,8 +4,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-
-module.exports = {
+ 
+module.exports = { 
   devtool: 'cheap-module-source-map',
   entry: './lib/index.js',
   output: {
@@ -31,11 +31,11 @@ module.exports = {
         exclude: /(node_modules|bower_components)/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: 'babel-loader', 
             options: {
               // presets: [['es2015', { modules: false }]],
-              plugins: [
-                'babel-plugin-transform-class-properties',
+              plugins: [ 
+                '@babel/plugin-proposal-class-properties',
                 // 'plugin-proposal-class-properties',
               ],
             },

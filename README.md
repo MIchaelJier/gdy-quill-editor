@@ -1,6 +1,6 @@
 # gdy-quill-editor
-基于Quill的vue编辑器组件 npm@0.1.2
-
+基于Quill的vue编辑器组件 npm@0.1.5  
+ 
 ## Base
 ``` javascript
 "quill": "2.0.0-dev.4"
@@ -8,7 +8,7 @@
 * 文档：  [https://quilljs.com/](https://quilljs.com/)
 * 中文文档： [http://doc.quilljs.cn/](http://doc.quilljs.cn/)
 
-## Installation
+## Install
 ``` javascript
 // npm
 npm install gdy-quill-editor  
@@ -43,8 +43,7 @@ components: {
 },
 ```
 
-## Options & Events
-#### 目录
+## Options & Events 
 * props
 
 | props | 类型 | 是否必填 | 默认值 | 描述   
@@ -177,4 +176,4 @@ quill.getModule('toolbar').addHandler('xxx', () => {})
 ```
 
 ## Screenshot 
-![avatar](https://raw.githubusercontent.com/MIchaelJier/gdy-quill-editor/master/screenshot/Snipaste_2020-08-02_13-21-52.png)  
+![avatar](https://raw.githubusercontent.com/MIchaelJier/gdy-quill-editor/master/screenshot/screenshot_phone.png)  

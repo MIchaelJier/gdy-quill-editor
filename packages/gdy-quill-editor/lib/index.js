@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import _Quill from 'quill'
 import yunEditor from './editor.vue'
 import Dplayer from 'dplayer'

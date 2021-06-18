@@ -1,8 +1,8 @@
 {
   "name": "gdy-quill-editor",
-  "version": "0.1.2",
+  "version": "0.1.5", 
   "main": "./dist/gdy-editor",
-  "author": "Michael",
+  "author": "Michael",  
   "email": "chem908430737@icloud.com",
   "homepage": "https://github.com/MIchaelJier/yunEditor",
   "keywords": [
@@ -15,7 +15,7 @@
   ],
   "dependencies": {
     "dplayer": "^1.26.0",
-    "fuse.js": "^6.4.0",
+    "fuse.js": "^6.4.0",   
     "hls.js": "^0.14.1",
     "quill": "2.0.0-dev.4",
     "quill-blot-formatter": "^1.0.5",
@@ -27,8 +27,7 @@
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "babel-loader": "^8.1.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-es2015": "^6.24.1",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
     "css-loader": "^3.6.0",
     "file-loader": "^1.1.4",
     "image-webpack-loader": "^6.0.0",

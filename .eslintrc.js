@@ -1,17 +1,17 @@
 module.exports = {
-  root: true,
+  root: true, 
   env: {
-    node: true,
-  },
+    browser: true 
+ },
   extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/prettier'],
   parserOptions: {
     parser: 'babel-eslint',
   },
-  rules: {
+  rules: { 
     // 0，1，2 分别表示 off, warning, error
 
     // 对 prettier 提示的内容做标红处理
-    'prettier/prettier': 2,
+    'prettier/prettier': 2, 
 
     // 缩进检测
     // @off 不作限制
