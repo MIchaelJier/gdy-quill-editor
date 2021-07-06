@@ -1,3 +1,8 @@
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-label, 
+.ql-toolbar.ql-snow .ql-picker.ql-expanded .ql-picker-options {
+  border-radius: 5px;
+}
+
 .ql-snow .ql-picker.ql-size .ql-picker-label::before, 
 .ql-snow .ql-picker.ql-size .ql-picker-item::before {
   content: '正文' !important;  
@@ -102,7 +107,7 @@
 /* lineHeight */
 
 .ql-lineHeight {
-  margin-right: 45px;
+  margin-right: 50px;
   margin-top: 5px;
 }
 .ql-lineHeight::before {
@@ -116,21 +121,21 @@
   left: 50px;
 }
 
-.ql-lineHeight-0-5 {
+.ql-lineHeight-0p5 {
   line-height: 0.5;
 }
 
-.ql-lineHeight-0-75 {
+.ql-lineHeight-0p75 {
   line-height: 0.75;
 }
 .ql-lineHeight-1 {
   line-height: 1;
 }
 
-.ql-lineHeight-1-5 {
+.ql-lineHeight-1p5 { 
   line-height: 1.5;
 }
-.ql-lineHeight-1-75 {
+.ql-lineHeight-1p75 {
   line-height: 1.75;
 }
 
@@ -138,16 +143,16 @@
   line-height: 2;
 }
 
-.ql-picker.ql-lineHeight .ql-picker-label[data-value="1-5"]::before,
-.ql-picker.ql-lineHeight .ql-picker-item[data-value="1-5"]::before {
+.ql-picker.ql-lineHeight .ql-picker-label[data-value="1p5"]::before,
+.ql-picker.ql-lineHeight .ql-picker-item[data-value="1p5"]::before {
   content: "1.5";
 }
-.ql-picker.ql-lineHeight .ql-picker-label[data-value="1-75"]::before,
-.ql-picker.ql-lineHeight .ql-picker-item[data-value="1-75"]::before {
+.ql-picker.ql-lineHeight .ql-picker-label[data-value="1p75"]::before,
+.ql-picker.ql-lineHeight .ql-picker-item[data-value="1p75"]::before {
   content: "1.75";
 }
-.ql-picker.ql-lineHeight .ql-picker-label[data-value="0-5"]::before,
-.ql-picker.ql-lineHeight .ql-picker-item[data-value="0-5"]::before {
+.ql-picker.ql-lineHeight .ql-picker-label[data-value="0p5"]::before,
+.ql-picker.ql-lineHeight .ql-picker-item[data-value="0p5"]::before {
   content: "0.5";
 }
 .ql-picker.ql-lineHeight .ql-picker-label[data-value="2"]::before,
@@ -158,8 +163,8 @@
 .ql-picker.ql-lineHeight .ql-picker-item[data-value="1"]::before {
   content: "1";
 }
-.ql-picker.ql-lineHeight .ql-picker-label[data-value="0-75"]::before,
-.ql-picker.ql-lineHeight .ql-picker-item[data-value="0-75"]::before {
+.ql-picker.ql-lineHeight .ql-picker-label[data-value="0p75"]::before,
+.ql-picker.ql-lineHeight .ql-picker-item[data-value="0p75"]::before {
   content: "0.75";
 }
 

@@ -12,7 +12,7 @@ const fontShape = [
   [{ size: whitelist }],
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],
-  [{ lineHeight: ['0-5', '0-75', '1', '1-5', '1-75', '2'] }],
+  [{ lineHeight: ['0p5', '0p75', '1', '1p5', '1p75', '2'] }],
 ]
 const other = [
   ['history-back', 'history-redo'],
@@ -34,7 +34,7 @@ const alltype = [
     { color: [] },
     { background: [] },
   ],
-  [{ lineHeight: ['0-5', '0-75', '1', '1-5', '1-75', '2'] }],
+  [{ lineHeight: ['0p5', '0p75', '1', '1p5', '1p75', '2'] }],
   [{ list: 'ordered' }, { list: 'bullet' }, 'grammarly-inline', 'code-block'],
   [
     { script: 'sub' },

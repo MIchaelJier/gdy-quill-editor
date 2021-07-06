@@ -1,6 +1,6 @@
 {
   "name": "editor-demo", 
-  "version": "0.1.5",
+  "version": "0.1.6",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
-    "gdy-quill-editor": "^0.1.5",
+    "gdy-quill-editor": "^0.1.6",
     "qs": "^6.9.4",
     "vconsole": "^3.3.4"
   },

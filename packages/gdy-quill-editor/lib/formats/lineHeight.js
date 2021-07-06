@@ -1,7 +1,7 @@
 import Quill from 'quill'
 const Parchment = Quill.import('parchment')
 
-const lineHeightList = ['0-5', '0-75', '1', '1-5', '1-75', '2']
+const lineHeightList = ['0p5', '0p75', '1', '1p5', '1p75', '2']
 
 // api 改动了 Attributor.class => ClassAttributor
 class LineHeightAttributor extends Parchment.ClassAttributor {}

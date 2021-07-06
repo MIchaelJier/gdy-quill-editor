@@ -1,5 +1,5 @@
 # gdy-quill-editor
-基于Quill的vue编辑器组件 npm@0.1.5  
+基于Quill的vue编辑器组件 npm@0.1.6
  
 ## Base
 ``` javascript
