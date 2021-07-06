@@ -6301,6 +6301,17 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
+gdy-quill-editor@^0.0.14:
+  version "0.0.14"
+  resolved "https://registry.npm.taobao.org/gdy-quill-editor/download/gdy-quill-editor-0.0.14.tgz#5f6878610b00760f7983e720f599fc95f8a9b206"
+  integrity sha1-X2h4YQsAdg95g+cg9Zn8lfipsgY=
+  dependencies:
+    dplayer "^1.26.0"
+    fuse.js "^6.4.0"
+    hls.js "^0.14.1"
+    quill "2.0.0-dev.3"
+    quill-blot-formatter "^1.0.5"
+
 genfun@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npm.taobao.org/genfun/download/genfun-5.0.0.tgz#9dd9710a06900a5c4a5bf57aca5da4e52fe76537"
@@ -6807,9 +6818,9 @@ hex-color-regex@^1.1.0:
   integrity sha1-TAb8y0YC/iYCs8k9+C1+fb8aio4=
 
 highlight.js@^9.6.0:
-  version "9.18.1"
-  resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-9.18.1.tgz?cache=0&sync_timestamp=1592353756514&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhighlight.js%2Fdownload%2Fhighlight.js-9.18.1.tgz#ed21aa001fe6252bb10a3d76d47573c6539fe13c"
-  integrity sha1-7SGqAB/mJSuxCj121HVzxlOf4Tw=
+  version "9.18.5"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.18.5.tgz#d18a359867f378c138d6819edfc2a8acd5f29825"
+  integrity sha512-a5bFyofd/BHCX52/8i8uJkjr9DYwXIPnM/plwI6W7ezItLGqzt7X2G2nXuYSfsIJdkwwj/g9DG1LkcGJI/dDoA==
 
 hls.js@^0.14.1:
   version "0.14.7"
