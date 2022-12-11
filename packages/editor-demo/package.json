@@ -9,7 +9,7 @@
   "dependencies": {
     "axios": "^0.20.0",
     "gdy-quill-editor": "^0.1.6",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "vconsole": "^3.3.4"
   },
   "devDependencies": {
