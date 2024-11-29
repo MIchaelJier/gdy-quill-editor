@@ -7,7 +7,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "gdy-quill-editor": "^0.1.6",
     "qs": "^6.9.4",
     "vconsole": "^3.3.4"
